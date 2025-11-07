@@ -1,0 +1,19 @@
+[package]
+name = "infinite-security-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+regex = "1.0"
+aes-gcm = "0.10"
+sha2 = "0.10"
+rand = "0.8"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[lib]
+name = "infinite_security_core"
+crate-type = ["cdylib", "rlib"]

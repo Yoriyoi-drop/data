@@ -1,0 +1,16 @@
+{
+  "users": {
+    "admin": {
+      "username": "admin",
+      "password_hash": "ee01b140c5d1f8a48ad594590c9d5bc6:8a0e62baf89914b84939528391078b9050482cfef0ec89aa4cb3ca9eb905af33",
+      "role": "admin",
+      "created_at": "2025-11-07T01:39:24.600628+00:00"
+    }
+  },
+  "threats": [],
+  "stats": {
+    "requests": 0,
+    "threats": 0,
+    "blocked": 0
+  }
+}

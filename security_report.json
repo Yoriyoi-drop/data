@@ -1,0 +1,335 @@
+{
+  "test_date": "2025-11-07T08:54:11.885499",
+  "target_url": "http://127.0.0.1:8000",
+  "results": {
+    "total_tests": 30,
+    "blocked": 20,
+    "allowed": 10,
+    "errors": 0,
+    "security_score": 66.7,
+    "vulnerabilities": [
+      {
+        "payload": "'; EXEC xp_cmdshell('dir'); --",
+        "attack_type": "sql_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "../../../etc/passwd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "..\\..\\..\\windows\\system32\\config\\sam",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "....//....//....//etc/passwd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "..\\..\\..\\boot.ini",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*)(uid=*))(|(uid=*",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*)(|(password=*))",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "admin)(&(password=*))",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*))%00",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      }
+    ],
+    "test_results": [
+      {
+        "payload": "admin' OR '1'='1",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.95,
+        "status": "SECURE"
+      },
+      {
+        "payload": "'; DROP TABLE users; --",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.98,
+        "status": "SECURE"
+      },
+      {
+        "payload": "' UNION SELECT * FROM passwords --",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.85,
+        "status": "SECURE"
+      },
+      {
+        "payload": "admin'--",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "' OR 1=1 --",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.95,
+        "status": "SECURE"
+      },
+      {
+        "payload": "1' OR '1'='1' /*",
+        "attack_type": "sql_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.95,
+        "status": "SECURE"
+      },
+      {
+        "payload": "'; EXEC xp_cmdshell('dir'); --",
+        "attack_type": "sql_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "<script>alert('XSS')</script>",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.95,
+        "status": "SECURE"
+      },
+      {
+        "payload": "javascript:alert('XSS')",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "<img src=x onerror=alert('XSS')>",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "<svg onload=alert('XSS')>",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "<iframe src=javascript:alert('XSS')>",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "';alert('XSS');//",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "<body onload=alert('XSS')>",
+        "attack_type": "xss",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "; dir",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.85,
+        "status": "SECURE"
+      },
+      {
+        "payload": "&& whoami",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "| type C:\\Windows\\System32\\drivers\\etc\\hosts",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.8,
+        "status": "SECURE"
+      },
+      {
+        "payload": "; net user hacker password123 /add",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.8,
+        "status": "SECURE"
+      },
+      {
+        "payload": "&& powershell -c Get-Process",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.85,
+        "status": "SECURE"
+      },
+      {
+        "payload": "| cmd.exe /c dir",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.9,
+        "status": "SECURE"
+      },
+      {
+        "payload": "; del /f /q *.*",
+        "attack_type": "command_injection",
+        "detected": true,
+        "blocked": true,
+        "confidence": 0.95,
+        "status": "SECURE"
+      },
+      {
+        "payload": "../../../etc/passwd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "..\\..\\..\\windows\\system32\\config\\sam",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "....//....//....//etc/passwd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "..\\..\\..\\boot.ini",
+        "attack_type": "path_traversal",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*)(uid=*))(|(uid=*",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*)(|(password=*))",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "admin)(&(password=*))",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      },
+      {
+        "payload": "*))%00",
+        "attack_type": "ldap_injection",
+        "detected": false,
+        "blocked": false,
+        "confidence": 0.0,
+        "status": "UNDETECTED"
+      }
+    ]
+  }
+}

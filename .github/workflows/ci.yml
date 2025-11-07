@@ -1,0 +1,120 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install Python dependencies
+      run: |
+        pip install -e .[dev]
+    
+    - name: Install Node dependencies
+      run: |
+        cd dashboard && npm ci
+    
+    - name: Code formatting check
+      run: black --check .
+    
+    - name: Lint Python code
+      run: flake8 .
+    
+    - name: Security scan
+      run: bandit -r . -f json
+    
+    - name: Dependency vulnerability scan
+      run: pip-audit --format=json
+    
+    - name: Run Python tests
+      run: pytest tests/ -v --cov=.
+    
+    - name: Test Go scanner
+      run: |
+        cd security_engine/scanner_go
+        go test -v ./...
+    
+    - name: Test Rust labyrinth
+      run: |
+        cd security_engine/labyrinth_rust
+        cargo test
+    
+    - name: Build dashboard
+      run: |
+        cd dashboard
+        npm run build
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build API image
+      run: |
+        docker build -f deployment/Dockerfile_api -t ai-security-api .
+    
+    - name: Build Go scanner image
+      run: |
+        cd security_engine/scanner_go
+        docker build -f ../../deployment/Dockerfile_go -t ai-security-scanner .
+    
+    - name: Build Rust labyrinth image
+      run: |
+        cd security_engine/labyrinth_rust
+        docker build -f ../../deployment/Dockerfile_rust -t ai-security-labyrinth .
+    
+    - name: Build dashboard image
+      run: |
+        cd dashboard
+        docker build -f ../deployment/Dockerfile_dashboard -t ai-security-dashboard .
+    
+    - name: Run security scan on images
+      run: |
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+          aquasec/trivy image ai-security-api
+
+  deploy:
+    needs: [test, docker]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to staging
+      run: |
+        echo "Deploying to staging environment..."
+        # Add deployment commands here

@@ -1,0 +1,29 @@
+# Production Requirements - Infinite AI Security
+# Core framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+
+# Security (Critical - as recommended by AI consultant team)
+bcrypt==4.2.1          # Secure password hashing
+PyJWT==2.10.1          # Proper JWT implementation
+cryptography==44.0.0   # Additional crypto support
+
+# Rate limiting
+slowapi==0.1.9         # Rate limiting for FastAPI
+
+# Database
+sqlite3                # Built-in Python module
+
+# Development and testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+pytest-cov==6.0.0
+httpx==0.28.1          # For testing async endpoints
+
+# Monitoring and logging (optional but recommended)
+structlog==24.5.0      # Structured logging
+python-json-logger==3.2.1
+
+# System monitoring
+psutil==6.1.0          # System resource monitoring

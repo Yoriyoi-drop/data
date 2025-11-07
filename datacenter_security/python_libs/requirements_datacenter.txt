@@ -1,0 +1,35 @@
+# 🐍 PYTHON LIBRARIES FOR DATA CENTER SECURITY (25 Libraries)
+
+# === AI & MACHINE LEARNING ===
+tensorflow==2.15.0              # Deep learning for threat detection
+torch==2.1.0                    # PyTorch for neural networks
+scikit-learn==1.3.2             # ML algorithms for anomaly detection
+xgboost==2.0.2                  # Gradient boosting for classification
+lightgbm==4.1.0                 # Fast gradient boosting
+pandas==2.1.4                   # Data manipulation and analysis
+numpy==1.24.4                   # Numerical computing
+
+# === SECURITY & CRYPTOGRAPHY ===
+cryptography==41.0.7            # Modern cryptographic recipes
+pycryptodome==3.19.0            # Cryptographic library
+passlib==1.7.4                  # Password hashing utilities
+pyotp==2.9.0                    # One-time password library
+pyjwt==2.8.0                    # JSON Web Token implementation
+
+# === NETWORK & MONITORING ===
+scapy==2.5.0                    # Packet manipulation and analysis
+netaddr==0.9.0                  # Network address manipulation
+psutil==5.9.6                   # System and process utilities
+paramiko==3.4.0                 # SSH2 protocol library
+fabric==3.2.2                   # Remote execution and deployment
+
+# === DATABASE & STORAGE ===
+sqlalchemy==2.0.23              # SQL toolkit and ORM
+redis==5.0.1                    # Redis client for caching
+elasticsearch==8.11.0           # Elasticsearch client
+pymongo==4.6.0                  # MongoDB driver
+
+# === WEB & API ===
+fastapi==0.104.1                # Modern web framework
+uvicorn==0.24.0                 # ASGI server
+aiohttp==3.9.1                  # Async HTTP client/server

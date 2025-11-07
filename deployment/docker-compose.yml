@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile_api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      - ../logs:/app/logs
+      - ../data:/app/data
+    depends_on:
+      - scanner
+      - labyrinth
+
+  dashboard:
+    build:
+      context: ../dashboard
+      dockerfile: ../deployment/Dockerfile_dashboard
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  scanner:
+    build:
+      context: ../security_engine/scanner_go
+      dockerfile: ../../deployment/Dockerfile_go
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../logs:/app/logs
+
+  labyrinth:
+    build:
+      context: ../security_engine/labyrinth_rust
+      dockerfile: ../../deployment/Dockerfile_rust
+    ports:
+      - "8090:8090"
+    volumes:
+      - ../data/traps:/app/traps
+      - ../logs:/app/logs
+
+networks:
+  default:
+    name: infinite_ai_security

@@ -1,0 +1,133 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "MongoDB Infinite Security Logs",
+    "tags": ["mongodb", "security", "logs"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Log Ingest Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(mongodb_op_counters_total{type=\"insert\"}[5m])",
+            "legendFormat": "Inserts/sec"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "ops/sec",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Write Latency P99",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "mongodb_mongod_op_latencies_latency{type=\"writes\", quantile=\"0.99\"}",
+            "legendFormat": "P99 Write Latency"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "microseconds",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Replication Lag",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "mongodb_mongod_replset_member_replication_lag",
+            "legendFormat": "{{member}} lag"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "seconds",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Storage Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "mongodb_mongod_storage_size_bytes",
+            "legendFormat": "{{database}} storage"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "bytes",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      },
+      {
+        "id": 5,
+        "title": "Connection Count",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "mongodb_mongod_connections{state=\"current\"}"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 16}
+      },
+      {
+        "id": 6,
+        "title": "Cache Hit Ratio",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "mongodb_mongod_wiredtiger_cache_bytes_currently_in_cache / mongodb_mongod_wiredtiger_cache_maximum_bytes_configured * 100"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 16}
+      },
+      {
+        "id": 7,
+        "title": "Kafka Consumer Lag",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "kafka_consumer_lag_sum",
+            "legendFormat": "Consumer lag"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20}
+      },
+      {
+        "id": 8,
+        "title": "Threat Severity Distribution",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "mongodb_collection_documents{collection=\"threat_logs\"}",
+            "legendFormat": "Total logs"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "10s"
+  }
+}

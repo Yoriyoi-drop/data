@@ -1,0 +1,41 @@
+name: Infinite AI Security CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run tests
+      run: python -m pytest testing/
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Docker image
+      run: docker build -t infinite-ai-security:${{ github.sha }} .
+    - name: Push to registry
+      run: echo "Push to container registry"
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to production
+      run: |
+        echo "Deploying to EKS cluster"
+        echo "kubectl set image deployment/api api=infinite-ai-security:${{ github.sha }}"

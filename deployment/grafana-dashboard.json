@@ -1,0 +1,91 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Infinite AI Security Dashboard",
+    "tags": ["security", "ai", "monitoring"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Threats Detected",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(threats_detected_total[5m])",
+            "legendFormat": "Threats/sec"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Active AI Agents",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "active_agents_count",
+            "legendFormat": "Active Agents"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Labyrinth Nodes",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "labyrinth_nodes_total",
+            "legendFormat": "Total Nodes"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Trapped Intruders",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "trapped_intruders_count",
+            "legendFormat": "Trapped"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "id": 5,
+        "title": "API Response Time",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(api_response_time_seconds_bucket[5m]))",
+            "legendFormat": "95th percentile"
+          },
+          {
+            "expr": "histogram_quantile(0.50, rate(api_response_time_seconds_bucket[5m]))",
+            "legendFormat": "50th percentile"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 6,
+        "title": "Threat Types",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum by (threat_type) (threats_detected_total)",
+            "legendFormat": "{{threat_type}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "5s"
+  }
+}

