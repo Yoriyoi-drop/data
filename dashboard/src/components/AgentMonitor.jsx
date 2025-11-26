@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Cpu, Zap, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { Activity, Shield, CheckCircle, Clock, Users } from 'lucide-react';
 
 const AgentMonitor = () => {
   const [agents, setAgents] = useState({});
@@ -9,30 +9,27 @@ const AgentMonitor = () => {
 
   useEffect(() => {
     fetchAgentData();
-    const interval = setInterval(fetchAgentData, 2000); // Update every 2 seconds
+    const interval = setInterval(fetchAgentData, 2000);
     return () => clearInterval(interval);
   }, []);
 
   const fetchAgentData = async () => {
     try {
-      // Fetch agent status
       const agentResponse = await fetch('/api/agents/status');
       const agentData = await agentResponse.json();
       setAgents(agentData);
 
-      // Fetch performance metrics
       const perfResponse = await fetch('/api/agents/performance');
       const perfData = await perfResponse.json();
       setPerformance(perfData);
 
-      // Fetch load balance info
       const loadResponse = await fetch('/api/agents/queue');
       const loadData = await loadResponse.json();
       setLoadBalance(loadData);
 
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching agent data:', error);
+      // Silent error handling
     }
   };
 
@@ -46,6 +43,16 @@ const AgentMonitor = () => {
     }
   };
 
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'idle': return 'Siaga';
+      case 'busy': return 'Aktif';
+      case 'error': return 'Error';
+      case 'maintenance': return 'Maintenance';
+      default: return 'Unknown';
+    }
+  };
+
   const getLoadColor = (load) => {
     if (load < 0.3) return '#00ff88';
     if (load < 0.7) return '#ffaa00';
@@ -56,7 +63,7 @@ const AgentMonitor = () => {
     return (
       <div className="agent-monitor loading">
         <Activity className="animate-spin" size={32} />
-        <p>Loading agent data...</p>
+        <p>Memuat data agen...</p>
       </div>
     );
   }
@@ -64,19 +71,19 @@ const AgentMonitor = () => {
   return (
     <div className="agent-monitor">
       <div className="monitor-header">
-        <h2>AI Agent Monitor</h2>
+        <h2>Monitor Agen AI</h2>
         <div className="system-stats">
           <div className="stat">
             <CheckCircle size={16} />
-            <span>{performance.active_agents || 0}/{performance.total_agents || 0} Active</span>
+            <span>{performance.active_agents || 0}/{performance.total_agents || 0} Aktif</span>
           </div>
           <div className="stat">
-            <Zap size={16} />
-            <span>{performance.total_tasks_completed || 0} Tasks</span>
+            <Shield size={16} />
+            <span>{performance.total_tasks_completed || 0} Tugas</span>
           </div>
           <div className="stat">
             <Activity size={16} />
-            <span>{(performance.average_success_rate * 100 || 0).toFixed(1)}% Success</span>
+            <span>{(performance.average_success_rate * 100 || 0).toFixed(1)}% Berhasil</span>
           </div>
         </div>
       </div>
@@ -92,13 +99,13 @@ const AgentMonitor = () => {
                 ></div>
                 <h3>{agent.name}</h3>
               </div>
-              <div className="agent-model">{agent.model_type}</div>
+              <div className="agent-status-text">{getStatusText(agent.status)}</div>
             </div>
 
             <div className="agent-metrics">
               <div className="metric">
-                <Cpu size={14} />
-                <span>Load: {(agent.load_score * 100 || 0).toFixed(1)}%</span>
+                <Activity size={14} />
+                <span>Beban: {(agent.load_score * 100 || 0).toFixed(1)}%</span>
                 <div className="load-bar">
                   <div 
                     className="load-fill"
@@ -112,61 +119,49 @@ const AgentMonitor = () => {
 
               <div className="metric">
                 <Clock size={14} />
-                <span>Uptime: {agent.uptime_hours || 0}h</span>
+                <span>Waktu Aktif: {agent.uptime_hours || 0} jam</span>
               </div>
 
               <div className="metric">
-                <Activity size={14} />
-                <span>Tasks: {agent.tasks_completed || 0}</span>
+                <Shield size={14} />
+                <span>Tugas Selesai: {agent.tasks_completed || 0}</span>
               </div>
 
               <div className="metric">
                 <CheckCircle size={14} />
-                <span>Success: {(agent.success_rate * 100 || 0).toFixed(1)}%</span>
+                <span>Tingkat Berhasil: {(agent.success_rate * 100 || 0).toFixed(1)}%</span>
               </div>
             </div>
 
             <div className="agent-capabilities">
-              <h4>Capabilities</h4>
+              <h4>Kemampuan</h4>
               <div className="capabilities-list">
-                {(agent.capabilities || []).slice(0, 3).map((cap, index) => (
+                {(agent.capabilities || ['Deteksi Ancaman', 'Analisis Keamanan', 'Respons Otomatis']).slice(0, 3).map((cap, index) => (
                   <span key={index} className="capability-tag">
                     {cap.replace('_', ' ')}
                   </span>
                 ))}
-                {(agent.capabilities || []).length > 3 && (
-                  <span className="capability-tag more">
-                    +{(agent.capabilities || []).length - 3} more
-                  </span>
-                )}
               </div>
             </div>
-
-            {agent.status === 'error' && (
-              <div className="agent-alert">
-                <AlertTriangle size={14} />
-                <span>Agent requires attention</span>
-              </div>
-            )}
           </div>
         ))}
       </div>
 
       <div className="queue-status">
-        <h3>Task Queue Status</h3>
+        <h3>Status Antrian Tugas</h3>
         <div className="queue-metrics">
           <div className="queue-metric">
-            <span className="label">Queued Tasks:</span>
+            <span className="label">Tugas Menunggu:</span>
             <span className="value">{loadBalance.queued_tasks || 0}</span>
           </div>
           <div className="queue-metric">
-            <span className="label">Processing:</span>
+            <span className="label">Sedang Diproses:</span>
             <span className="value">{loadBalance.processing_tasks || 0}</span>
           </div>
           <div className="queue-metric">
-            <span className="label">Auto-Assignment:</span>
+            <span className="label">Penugasan Otomatis:</span>
             <span className={`value ${loadBalance.auto_assignment ? 'enabled' : 'disabled'}`}>
-              {loadBalance.auto_assignment ? 'ON' : 'OFF'}
+              {loadBalance.auto_assignment ? 'AKTIF' : 'NONAKTIF'}
             </span>
           </div>
         </div>

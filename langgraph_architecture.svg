@@ -1,0 +1,373 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .tier { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+    .node { fill: #ffffff; stroke: #000000; stroke-width: 1; }
+    .ai_core { fill: #e3f2fd; }
+    .data { fill: #e8f5e8; }
+    .compute { fill: #fff3e0; }
+    .decision { fill: #fce4ec; }
+    .security { fill: #f3e5f5; }
+    .control { fill: #e0f2f1; }
+    .queue { fill: #fff8e1; }
+    .text { font-family: Arial, sans-serif; font-size: 10px; text-anchor: middle; }
+    .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+  </style>
+
+  <!-- Title -->
+  <text x="600" y="30" class="title">Arsitektur LangGraph 200 Node dalam 50 Level</text>
+  
+  <!-- Legend -->
+  <g transform="translate(10, 50)">
+    <text x="0" y="0" font-size="12" font-weight="bold">Legend:</text>
+    <rect x="0" y="10" width="15" height="15" class="ai_core" stroke="#000000" stroke-width="1"/>
+    <text x="20" y="22" font-size="10">AI Core</text>
+    
+    <rect x="100" y="10" width="15" height="15" class="data" stroke="#000000" stroke-width="1"/>
+    <text x="120" y="22" font-size="10">Data</text>
+    
+    <rect x="180" y="10" width="15" height="15" class="compute" stroke="#000000" stroke-width="1"/>
+    <text x="200" y="22" font-size="10">Compute</text>
+    
+    <rect x="270" y="10" width="15" height="15" class="decision" stroke="#000000" stroke-width="1"/>
+    <text x="290" y="22" font-size="10">Decision</text>
+    
+    <rect x="370" y="10" width="15" height="15" class="security" stroke="#000000" stroke-width="1"/>
+    <text x="390" y="22" font-size="10">Security</text>
+    
+    <rect x="470" y="10" width="15" height="15" class="control" stroke="#000000" stroke-width="1"/>
+    <text x="490" y="22" font-size="10">Control</text>
+    
+    <rect x="570" y="10" width="15" height="15" class="queue" stroke="#000000" stroke-width="1"/>
+    <text x="590" y="22" font-size="10">Queue</text>
+  </g>
+
+  <!-- Stages labels -->
+  <text x="150" y="80" font-size="12" font-weight="bold" text-anchor="middle">Stage 1: Input Processing (1-10)</text>
+  <text x="350" y="80" font-size="12" font-weight="bold" text-anchor="middle">Stage 2: Reasoning (11-20)</text>
+  <text x="550" y="80" font-size="12" font-weight="bold" text-anchor="middle">Stage 3: Execution (21-30)</text>
+  <text x="750" y="80" font-size="12" font-weight="bold" text-anchor="middle">Stage 4: Validation (31-40)</text>
+  <text x="950" y="80" font-size="12" font-weight="bold" text-anchor="middle">Stage 5: Output (41-50)</text>
+
+  <!-- Tiers and Nodes -->
+  <!-- Stage 1: Input Processing (Levels 1-10) -->
+  <g transform="translate(100, 100)">
+    <!-- Tiers for Stage 1 -->
+    <g>
+      <!-- Level 1 -->
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 1</text>
+      
+      <!-- Nodes in Level 1 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">D1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">D2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">AI</text>
+    </g>
+
+    <!-- Level 2 -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 2</text>
+      
+      <!-- Nodes in Level 2 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">D1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">D2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">AI</text>
+    </g>
+
+    <!-- Level 3 -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 3</text>
+      
+      <!-- Nodes in Level 3 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">D1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">D2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">AI</text>
+    </g>
+  </g>
+
+  <!-- Stage 2: Reasoning (Levels 11-20) -->
+  <g transform="translate(100, 250)">
+    <!-- Tiers for Stage 2 -->
+    <g>
+      <!-- Level 11 -->
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 11</text>
+      
+      <!-- Nodes in Level 11 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">AI2</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec</text>
+    </g>
+
+    <!-- Level 12 -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 12</text>
+      
+      <!-- Nodes in Level 12 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">AI2</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec</text>
+    </g>
+
+    <!-- Level 13 -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 13</text>
+      
+      <!-- Nodes in Level 13 -->
+      <rect x="10" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">AI1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="ai_core" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">AI2</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec</text>
+    </g>
+  </g>
+
+  <!-- Stage 3: Execution (Levels 21-30) -->
+  <g transform="translate(100, 400)">
+    <!-- Tiers for Stage 3 -->
+    <g>
+      <!-- Level 21 -->
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 21</text>
+      
+      <!-- Nodes in Level 21 -->
+      <rect x="10" y="25" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Cmp1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+
+    <!-- Level 22 -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 22</text>
+      
+      <!-- Nodes in Level 22 -->
+      <rect x="10" y="25" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Cmp1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+
+    <!-- Level 23 -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 23</text>
+      
+      <!-- Nodes in Level 23 -->
+      <rect x="10" y="25" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Cmp1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="compute" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Cmp2</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+  </g>
+
+  <!-- Stage 4: Validation (Levels 31-40) -->
+  <g transform="translate(500, 100)">
+    <!-- Tiers for Stage 4 -->
+    <g>
+      <!-- Level 31 -->
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 31</text>
+      
+      <!-- Nodes in Level 31 -->
+      <rect x="10" y="25" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Sec1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Data</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+
+    <!-- Level 32 -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 32</text>
+      
+      <!-- Nodes in Level 32 -->
+      <rect x="10" y="25" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Sec1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Data</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+
+    <!-- Level 33 -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 33</text>
+      
+      <!-- Nodes in Level 33 -->
+      <rect x="10" y="25" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Sec1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Dec1</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Data</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="decision" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Dec2</text>
+    </g>
+  </g>
+
+  <!-- Stage 5: Output (Levels 41-50) -->
+  <g transform="translate(500, 250)">
+    <!-- Tiers for Stage 5 -->
+    <g>
+      <!-- Level 41 -->
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 41</text>
+      
+      <!-- Nodes in Level 41 -->
+      <rect x="10" y="25" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Ctrl1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Data</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Sec</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Ctrl2</text>
+    </g>
+
+    <!-- Level 42 -->
+    <g transform="translate(100, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 42</text>
+      
+      <!-- Nodes in Level 42 -->
+      <rect x="10" y="25" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Ctrl1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Data</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Sec</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Ctrl2</text>
+    </g>
+
+    <!-- Level 43 -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="80" height="100" class="tier" rx="5" ry="5"/>
+      <text x="40" y="15" class="text" font-weight="bold">Lvl 43</text>
+      
+      <!-- Nodes in Level 43 -->
+      <rect x="10" y="25" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="22.5" y="40" class="text" font-size="8">Ctrl1</text>
+      
+      <rect x="45" y="25" width="25" height="20" class="data" rx="3" ry="3"/>
+      <text x="57.5" y="40" class="text" font-size="8">Data</text>
+      
+      <rect x="10" y="55" width="25" height="20" class="security" rx="3" ry="3"/>
+      <text x="22.5" y="70" class="text" font-size="8">Sec</text>
+      
+      <rect x="45" y="55" width="25" height="20" class="control" rx="3" ry="3"/>
+      <text x="57.5" y="70" class="text" font-size="8">Ctrl2</text>
+    </g>
+  </g>
+
+  <!-- Arrows showing flow between stages -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+      refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- Flow between stages -->
+  <line x1="340" y1="180" x2="360" y2="270" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="340" y1="350" x2="360" y2="420" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="340" y1="500" x2="500" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="740" y1="180" x2="760" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <!-- Title for the flow -->
+  <text x="600" y="750" font-size="14" text-anchor="middle" font-weight="bold">Alur Eksekusi: Input → Reasoning → Execution → Validation → Output</text>
+</svg>

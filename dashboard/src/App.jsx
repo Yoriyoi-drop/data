@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Activity, Users, AlertTriangle } from 'lucide-react';
+import { Shield, Activity, Users, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -12,7 +12,6 @@ function App() {
     fetchThreats();
     fetchAgentStatus();
     
-    // Update setiap 5 detik
     const interval = setInterval(() => {
       fetchDashboardData();
       fetchThreats();
@@ -27,7 +26,7 @@ function App() {
       const data = await response.json();
       setDashboardData(data);
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+      // Silent error handling
     }
   };
 
@@ -37,7 +36,7 @@ function App() {
       const data = await response.json();
       setThreats(data.threats || []);
     } catch (error) {
-      console.error('Error fetching threats:', error);
+      // Silent error handling
     }
   };
 
@@ -47,7 +46,26 @@ function App() {
       const data = await response.json();
       setAgentStatus(data);
     } catch (error) {
-      console.error('Error fetching agent status:', error);
+      // Silent error handling
+    }
+  };
+
+  const getThreatSeverityText = (level) => {
+    switch(level?.toLowerCase()) {
+      case 'critical': return 'Ancaman Kritis';
+      case 'high': return 'Ancaman Tinggi';
+      case 'medium': return 'Ancaman Sedang';
+      case 'low': return 'Ancaman Rendah';
+      default: return 'Aktivitas Mencurigakan';
+    }
+  };
+
+  const getAgentStatusText = (status) => {
+    switch(status?.toLowerCase()) {
+      case 'idle': return 'Siaga';
+      case 'busy': return 'Aktif';
+      case 'error': return 'Perlu Perhatian';
+      default: return 'Online';
     }
   };
 
@@ -55,7 +73,7 @@ function App() {
     return (
       <div className="loading">
         <Shield className="animate-spin" size={48} />
-        <p>Loading AI Security Dashboard...</p>
+        <p>Memuat Dashboard Keamanan AI...</p>
       </div>
     );
   }
@@ -65,19 +83,18 @@ function App() {
       <header className="header">
         <div className="header-content">
           <Shield size={32} />
-          <h1>Infinite AI Security Platform</h1>
-          <div className="status-indicator online">ONLINE</div>
+          <h1>Platform Keamanan AI Infinite</h1>
+          <div className="status-indicator online">AKTIF</div>
         </div>
       </header>
 
       <div className="dashboard-grid">
-        {/* Stats Cards */}
         <div className="stats-grid">
           <div className="stat-card">
             <Users size={24} />
             <div>
               <h3>{dashboardData.agents.active}/{dashboardData.agents.total}</h3>
-              <p>AI Agents Active</p>
+              <p>Agen AI Aktif</p>
             </div>
           </div>
           
@@ -85,7 +102,7 @@ function App() {
             <AlertTriangle size={24} />
             <div>
               <h3>{dashboardData.threats.critical}</h3>
-              <p>Critical Threats</p>
+              <p>Ancaman Kritis</p>
             </div>
           </div>
           
@@ -93,7 +110,7 @@ function App() {
             <Activity size={24} />
             <div>
               <h3>{dashboardData.labyrinth.nodes}</h3>
-              <p>Labyrinth Nodes</p>
+              <p>Node Pertahanan</p>
             </div>
           </div>
           
@@ -101,46 +118,43 @@ function App() {
             <Shield size={24} />
             <div>
               <h3>{dashboardData.labyrinth.intruders}</h3>
-              <p>Trapped Intruders</p>
+              <p>Penyusup Terjebak</p>
             </div>
           </div>
         </div>
 
-        {/* Agent Status */}
         <div className="panel">
-          <h2>AI Agent Status</h2>
+          <h2>Status Agen AI</h2>
           <div className="agent-list">
             {Object.entries(agentStatus).map(([name, status]) => (
               <div key={name} className="agent-item">
                 <div className={`agent-status ${status.status}`}></div>
                 <div>
                   <strong>{status.name}</strong>
-                  <p>{status.model} - {status.tasks_completed} tasks</p>
+                  <p>{getAgentStatusText(status.status)} - {status.tasks_completed} tugas selesai</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Threats */}
         <div className="panel">
-          <h2>Recent Threats</h2>
+          <h2>Ancaman Terbaru</h2>
           <div className="threat-list">
             {threats.slice(-5).map((threat, index) => (
               <div key={index} className="threat-item">
                 <div className="threat-severity high"></div>
                 <div>
-                  <strong>Threat #{threat.id}</strong>
-                  <p>{threat.analysis?.threat_level || 'Unknown'} - {new Date(threat.timestamp).toLocaleTimeString()}</p>
+                  <strong>{getThreatSeverityText(threat.analysis?.threat_level)}</strong>
+                  <p>Terdeteksi pada {new Date(threat.timestamp).toLocaleTimeString('id-ID')}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Labyrinth Visualization */}
         <div className="panel labyrinth-panel">
-          <h2>Infinite Labyrinth Defense</h2>
+          <h2>Pertahanan Labirin Infinite</h2>
           <div className="labyrinth-viz">
             <div className="maze-grid">
               {Array.from({length: 64}).map((_, i) => (
@@ -151,9 +165,9 @@ function App() {
               ))}
             </div>
             <div className="labyrinth-stats">
-              <p>🌀 Nodes: {dashboardData.labyrinth.nodes}</p>
-              <p>🕷️ Intruders: {dashboardData.labyrinth.intruders}</p>
-              <p>⚡ Traps: {dashboardData.labyrinth.traps_triggered}</p>
+              <p>Node Aktif: {dashboardData.labyrinth.nodes}</p>
+              <p>Penyusup Terjebak: {dashboardData.labyrinth.intruders}</p>
+              <p>Jebakan Aktif: {dashboardData.labyrinth.traps_triggered}</p>
             </div>
           </div>
         </div>

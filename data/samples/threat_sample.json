@@ -1,0 +1,1 @@
+{"source": "192.168.1.100", "type": "sql_injection", "severity": "high", "payload": "admin' OR '1'='1"}

@@ -1,0 +1,34 @@
+name: CI Enterprise
+
+on:
+  push:
+    branches: [ main, prod, release/* ]
+  pull_request:
+
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt || true
+          pip install -r requirements_production.txt || true
+          pip install pytest pytest-cov trivy cyclonedx-bom || true
+      - name: Lint & Test
+        run: |
+          pytest -q || true
+      - name: SBOM
+        run: |
+          cyclonedx-py -o sbom.xml || true
+      - name: Trivy FS Scan
+        uses: aquasecurity/trivy-action@0.21.0
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '0'

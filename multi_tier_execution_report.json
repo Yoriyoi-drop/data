@@ -1,0 +1,18 @@
+{
+  "execution_summary": {
+    "total_tiers": 5,
+    "total_execution_time": 1.675213098526001,
+    "average_time_per_tier": 0.3350426197052002,
+    "timestamp": "2025-11-13T14:54:42.162680"
+  },
+  "performance_metrics": {
+    "nodes_per_second": 11.938779620095945,
+    "efficiency_rating": "high"
+  },
+  "node_type_distribution": {
+    "ai_core": 5,
+    "data": 5,
+    "compute": 5,
+    "decision": 5
+  }
+}

@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ../../services/api-gateway
+    ports:
+      - "8030:8000"
+    environment:
+      - AI_HUB_URL=http://ai-hub:8001
+      - SCANNER_URL=http://scanner:8002
+      - LABYRINTH_URL=http://labyrinth:8003
+      - DATABASE_URL=postgresql://admin:admin@postgres:5432/ai_security
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+      - postgres
+
+  ai-hub:
+    build: ../../services/ai-hub
+    ports:
+      - "8031:8001"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  scanner:
+    build: ../../services/scanner-go
+    ports:
+      - "8032:8002"
+    depends_on:
+      - api-gateway
+
+  labyrinth:
+    build: ../../services/labyrinth-rust
+    ports:
+      - "8033:8003"
+    depends_on:
+      - api-gateway
+
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5681:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ai_security
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d ai_security" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6383:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  # frontend:
+  #   build: ../../frontend
+  #   ports:
+  #     - "3003:3000"
+  #   environment:
+  #     - VITE_API_URL=http://localhost:8030
+  #   depends_on:
+  #     - api-gateway
+
+volumes:
+  postgres_data:
+  n8n_data:
+
+

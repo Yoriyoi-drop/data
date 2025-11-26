@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite AI Security Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a0a; color: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; color: #00ff88; margin-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 20px; }
+        .card h3 { color: #00ff88; margin-bottom: 15px; }
+        .status { display: flex; align-items: center; margin-bottom: 10px; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; background: #00ff88; }
+        .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .metric { background: #2a2a2a; padding: 10px; border-radius: 5px; text-align: center; }
+        .metric-value { font-size: 1.5em; color: #00ff88; font-weight: bold; }
+        .scan-input { width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: #fff; margin-bottom: 10px; }
+        .btn { background: #00ff88; color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .result { margin-top: 15px; padding: 10px; background: #2a2a2a; border-radius: 5px; }
+        .threat { color: #ff4444; }
+        .clean { color: #00ff88; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Infinite AI Security Platform</h1>
+            <p>Multi-Language Security Hub - Real-time Threat Detection</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>🔧 System Status</h3>
+                <div class="status"><div class="status-dot"></div><span>ASM Core: Active</span></div>
+                <div class="status"><div class="status-dot"></div><span>Go Scanner: Active</span></div>
+                <div class="status"><div class="status-dot"></div><span>Rust Labyrinth: Active</span></div>
+                <div class="status"><div class="status-dot"></div><span>C++ Engine: Active</span></div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Performance</h3>
+                <div class="metrics">
+                    <div class="metric"><div class="metric-value" id="scans">0</div><div>Scans</div></div>
+                    <div class="metric"><div class="metric-value" id="threats">0</div><div>Threats</div></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🔍 Threat Scanner</h3>
+                <textarea class="scan-input" id="input" placeholder="Enter data to scan..." rows="3"></textarea>
+                <button class="btn" onclick="scan()">Scan</button>
+                <div class="result" id="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scanCount = 0, threatCount = 0;
+        
+        async function scan() {
+            const input = document.getElementById('input').value;
+            if (!input.trim()) return;
+            
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.innerHTML = 'Scanning...';
+            
+            // Simulate scan
+            await new Promise(r => setTimeout(r, 500));
+            scanCount++;
+            
+            const threats = ['select', 'script', 'union', 'drop', 'exec'];
+            const hasThreat = threats.some(t => input.toLowerCase().includes(t));
+            
+            if (hasThreat) {
+                threatCount++;
+                result.innerHTML = '<div class="threat">🚨 THREAT DETECTED</div>';
+            } else {
+                result.innerHTML = '<div class="clean">✅ CLEAN</div>';
+            }
+            
+            document.getElementById('scans').textContent = scanCount;
+            document.getElementById('threats').textContent = threatCount;
+        }
+    </script>
+</body>
+</html>

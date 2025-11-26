@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite AI Security - Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Enterprise Color Palette */
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f2e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-critical: #ef4444;
+            --accent-brand: #3b82f6;
+            --border-subtle: #334155;
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Layout Grid */
+        .command-center {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 60px 1fr;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main";
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            grid-area: header;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .header-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-subtle);
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-brand {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-brand);
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0 1.5rem 0.75rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-primary);
+            border-left-color: var(--accent-brand);
+        }
+
+        /* Main Content */
+        .main-content {
+            grid-area: main;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Threat Map */
+        .threat-map {
+            grid-column: span 8;
+            grid-row: span 2;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 350px;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .threat-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-critical);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-critical);
+            animation: threatPulse 2s infinite;
+        }
+
+        @keyframes threatPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+
+        /* Agent Status */
+        .agent-status {
+            grid-column: span 4;
+        }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .agent-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .agent-card.active::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--accent-brand), var(--accent-success));
+            border-radius: 6px;
+            z-index: -1;
+            animation: agentGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes agentGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .agent-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-status-text {
+            font-size: 0.75rem;
+            color: var(--accent-success);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Metrics */
+        .metrics-row {
+            grid-column: span 12;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-change {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .metric-change.positive {
+            color: var(--accent-success);
+        }
+
+        .metric-change.negative {
+            color: var(--accent-critical);
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            grid-column: span 6;
+            max-height: 400px;
+        }
+
+        .activity-list {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            background: rgba(26, 31, 46, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .activity-item:hover {
+            background: rgba(26, 31, 46, 0.6);
+            transform: translateX(4px);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .activity-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .activity-indicator.critical {
+            background: var(--accent-critical);
+        }
+
+        .activity-indicator.warning {
+            background: var(--accent-warning);
+        }
+
+        .activity-indicator.success {
+            background: var(--accent-success);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .activity-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-time {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .activity-source {
+            color: var(--accent-brand);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Performance Chart */
+        .performance-chart {
+            grid-column: span 6;
+        }
+
+        .chart-container {
+            height: 320px;
+            position: relative;
+        }
+        
+        /* Time Period Selector */
+        .time-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .time-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .time-btn:hover,
+        .time-btn.active {
+            background: var(--accent-brand);
+            color: white;
+            border-color: var(--accent-brand);
+        }
+        
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .perf-stat {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(26, 31, 46, 0.3);
+            border-radius: 6px;
+        }
+        
+        .perf-stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .perf-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* View Header */
+        .view-header {
+            margin-bottom: 2rem;
+        }
+        
+        .view-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .view-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        /* Agent Detail Cards */
+        .agent-control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-detail-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .agent-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+        }
+        
+        .agent-info h3 {
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .agent-info p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-stats span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .btn-test {
+            background: var(--accent-brand);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .btn-test:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        /* Attack Simulator */
+        .attack-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .attack-type {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .attack-type:hover {
+            background: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+        
+        .attack-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+        }
+        
+        .attack-info h4 {
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .attack-info p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+        
+        .attack-results {
+            padding: 1rem;
+            background: rgba(26, 31, 46, 0.3);
+            border-radius: 6px;
+            min-height: 200px;
+        }
+        
+        /* Attack Vectors */
+        .attack-vectors {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .vector-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .vector-name {
+            min-width: 120px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+        
+        .vector-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .vector-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-critical), var(--accent-warning));
+            border-radius: 4px;
+        }
+        
+        .vector-count {
+            min-width: 60px;
+            text-align: right;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        /* Response Actions */
+        .response-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .action-btn.emergency {
+            background: var(--accent-critical);
+            color: white;
+        }
+        
+        .action-btn.scan {
+            background: var(--accent-brand);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Incidents */
+        .incidents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .incident-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(26, 31, 46, 0.3);
+        }
+        
+        .incident-item.critical {
+            border-left: 4px solid var(--accent-critical);
+        }
+        
+        .incident-severity {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--accent-critical);
+            color: white;
+        }
+        
+        .incident-details h4 {
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .incident-details p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .incident-time {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        
+        /* Sessions */
+        .sessions-table {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .session-row {
+            padding: 1rem;
+            background: rgba(26, 31, 46, 0.3);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .command-center {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main";
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .threat-map {
+                grid-column: span 12;
+            }
+            
+            .agent-status {
+                grid-column: span 12;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="command-center">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">Command Center</div>
+            <div class="header-status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>All Systems Operational</span>
+                </div>
+                <div class="status-indicator">
+                    <span>4 Agents Active</span>
+                </div>
+                <div class="status-indicator">
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-title">Infinite AI Security</div>
+                <div class="brand-subtitle">Command Center</div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Monitoring</div>
+                <div class="nav-item active" data-view="overview">
+                    <span>🛡️</span>
+                    <span>Threat Overview</span>
+                </div>
+                <div class="nav-item" data-view="agents">
+                    <span>🤖</span>
+                    <span>AI Agents</span>
+                </div>
+                <div class="nav-item" data-view="analytics">
+                    <span>📊</span>
+                    <span>Analytics</span>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Security</div>
+                <div class="nav-item" data-view="hunting">
+                    <span>🔍</span>
+                    <span>Threat Hunting</span>
+                </div>
+                <div class="nav-item" data-view="incidents">
+                    <span>⚡</span>
+                    <span>Incident Response</span>
+                </div>
+                <div class="nav-item" data-view="access">
+                    <span>🔒</span>
+                    <span>Access Control</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-grid">
+                <!-- Threat Map -->
+                <div class="card threat-map">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Global Threat Map</div>
+                            <div class="card-subtitle">Real-time attack visualization</div>
+                        </div>
+                    </div>
+                    <div class="map-container" id="threatMap">
+                        <!-- Threat points will be dynamically added -->
+                    </div>
+                </div>
+
+                <!-- Agent Status -->
+                <div class="card agent-status">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">AI Agent Status</div>
+                            <div class="card-subtitle">Active monitoring agents</div>
+                        </div>
+                    </div>
+                    <div class="agent-grid">
+                        <div class="agent-card active">
+                            <div class="agent-name">GPT-5</div>
+                            <div class="agent-status-text">Strategic Analysis</div>
+                        </div>
+                        <div class="agent-card active">
+                            <div class="agent-name">Claude</div>
+                            <div class="agent-status-text">Code Review</div>
+                        </div>
+                        <div class="agent-card active">
+                            <div class="agent-name">Grok</div>
+                            <div class="agent-status-text">Pattern Recognition</div>
+                        </div>
+                        <div class="agent-card active">
+                            <div class="agent-name">Mistral</div>
+                            <div class="agent-status-text">Speed Processing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics Row -->
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-value" id="threatsBlocked">1,247</div>
+                        <div class="metric-label">Threats Blocked</div>
+                        <div class="metric-change positive">+12% from yesterday</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="systemUptime">99.97%</div>
+                        <div class="metric-label">System Uptime</div>
+                        <div class="metric-change positive">+0.02% this month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="responseTime">47ms</div>
+                        <div class="metric-label">Avg Response Time</div>
+                        <div class="metric-change positive">-8ms improvement</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="activeConnections">156</div>
+                        <div class="metric-label">Active Connections</div>
+                        <div class="metric-change positive">+23 new sessions</div>
+                    </div>
+                </div>
+
+                <!-- Activity Feed -->
+                <div class="card activity-feed">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Security Events</div>
+                            <div class="card-subtitle">Recent activity log</div>
+                        </div>
+                    </div>
+                    <div class="activity-list" id="activityFeed">
+                        <!-- Activity items will be dynamically added -->
+                    </div>
+                </div>
+
+                <!-- Performance Chart -->
+                <div class="card performance-chart">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">System Performance</div>
+                            <div class="card-subtitle" id="performanceSubtitle">Real-time monitoring</div>
+                        </div>
+                    </div>
+                    <div class="time-selector">
+                        <button class="time-btn active" data-period="day">Day</button>
+                        <button class="time-btn" data-period="week">Week</button>
+                        <button class="time-btn" data-period="month">Month</button>
+                        <button class="time-btn" data-period="year">Year</button>
+                        <button class="time-btn" data-period="all">All</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                    <div class="performance-stats">
+                        <div class="perf-stat">
+                            <div class="perf-stat-value" id="avgResponseTime">47ms</div>
+                            <div class="perf-stat-label">Avg Response</div>
+                        </div>
+                        <div class="perf-stat">
+                            <div class="perf-stat-value" id="peakResponseTime">89ms</div>
+                            <div class="perf-stat-label">Peak Response</div>
+                        </div>
+                        <div class="perf-stat">
+                            <div class="perf-stat-value" id="uptimePercent">99.97%</div>
+                            <div class="perf-stat-label">Uptime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enterprise Dashboard JavaScript
+        class EnterpriseDashboard {
+            constructor() {
+                this.initializeComponents();
+                this.startRealTimeUpdates();
+            }
+
+            initializeComponents() {
+                this.updateTime();
+                this.initializeThreatMap();
+                this.initializeActivityFeed();
+                this.initializePerformanceChart();
+            }
+
+            updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour12: false,
+                    timeZone: 'UTC'
+                }) + ' UTC';
+                document.getElementById('current-time').textContent = timeString;
+            }
+
+            initializeThreatMap() {
+                const mapContainer = document.getElementById('threatMap');
+                const threatLocations = [
+                    { x: 15, y: 30 }, { x: 45, y: 25 }, { x: 75, y: 40 },
+                    { x: 25, y: 60 }, { x: 85, y: 20 }, { x: 60, y: 70 }
+                ];
+
+                threatLocations.forEach((location, index) => {
+                    setTimeout(() => {
+                        const point = document.createElement('div');
+                        point.className = 'threat-point';
+                        point.style.left = location.x + '%';
+                        point.style.top = location.y + '%';
+                        mapContainer.appendChild(point);
+                    }, index * 500);
+                });
+            }
+
+            initializeActivityFeed() {
+                const activities = [
+                    { 
+                        type: 'critical', 
+                        title: 'SQL Injection Attack Blocked', 
+                        source: '192.168.1.100',
+                        time: '2 min ago',
+                        details: 'Malicious payload detected and neutralized'
+                    },
+                    { 
+                        type: 'warning', 
+                        title: 'Suspicious Login Pattern Detected', 
+                        source: '10.0.0.45',
+                        time: '5 min ago',
+                        details: 'Multiple failed authentication attempts'
+                    },
+                    { 
+                        type: 'success', 
+                        title: 'System Security Scan Completed', 
+                        source: 'Internal',
+                        time: '12 min ago',
+                        details: 'All systems verified - no threats found'
+                    },
+                    { 
+                        type: 'critical', 
+                        title: 'Cross-Site Scripting (XSS) Prevented', 
+                        source: '203.0.113.5',
+                        time: '18 min ago',
+                        details: 'Malicious script injection attempt blocked'
+                    },
+                    { 
+                        type: 'success', 
+                        title: 'AI Agent GPT-5 Status: Online', 
+                        source: 'System',
+                        time: '25 min ago',
+                        details: 'Strategic analysis agent fully operational'
+                    }
+                ];
+
+                const feedContainer = document.getElementById('activityFeed');
+                activities.forEach(activity => {
+                    const item = document.createElement('div');
+                    item.className = 'activity-item';
+                    item.innerHTML = `
+                        <div class="activity-indicator ${activity.type}"></div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-meta">
+                                <span class="activity-source">${activity.source}</span>
+                                <span>•</span>
+                                <span class="activity-time">${activity.time}</span>
+                            </div>
+                        </div>
+                    `;
+                    feedContainer.appendChild(item);
+                });
+            }
+
+            initializePerformanceChart() {
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                
+                this.performanceChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: this.getTimeLabels('day'),
+                        datasets: [{
+                            label: 'Response Time (ms)',
+                            data: this.getPerformanceData('day'),
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: '#334155',
+                                    borderColor: '#334155'
+                                },
+                                ticks: {
+                                    color: '#94a3b8'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: '#334155',
+                                    borderColor: '#334155'
+                                },
+                                ticks: {
+                                    color: '#94a3b8'
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                this.setupTimeSelector();
+            }
+            
+            setupTimeSelector() {
+                const timeButtons = document.querySelectorAll('.time-btn');
+                
+                timeButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        // Remove active class from all buttons
+                        timeButtons.forEach(b => b.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        btn.classList.add('active');
+                        
+                        // Get selected period
+                        const period = btn.getAttribute('data-period');
+                        
+                        // Update chart
+                        this.updatePerformanceChart(period);
+                    });
+                });
+            }
+            
+            updatePerformanceChart(period) {
+                const labels = this.getTimeLabels(period);
+                const data = this.getPerformanceData(period);
+                
+                this.performanceChart.data.labels = labels;
+                this.performanceChart.data.datasets[0].data = data;
+                this.performanceChart.update();
+                
+                // Update subtitle
+                const subtitle = document.getElementById('performanceSubtitle');
+                const periodText = {
+                    'day': 'Last 24 hours',
+                    'week': 'Last 7 days', 
+                    'month': 'Last 30 days',
+                    'year': 'Last 12 months',
+                    'all': 'All time data'
+                };
+                subtitle.textContent = periodText[period] || 'Real-time monitoring';
+                
+                // Update performance stats
+                this.updatePerformanceStats(period, data);
+            }
+            
+            getTimeLabels(period) {
+                const now = new Date();
+                
+                switch(period) {
+                    case 'day':
+                        return Array.from({length: 24}, (_, i) => {
+                            const hour = new Date(now.getTime() - (23-i) * 60 * 60 * 1000);
+                            return hour.getHours().toString().padStart(2, '0') + ':00';
+                        });
+                    case 'week':
+                        return Array.from({length: 7}, (_, i) => {
+                            const day = new Date(now.getTime() - (6-i) * 24 * 60 * 60 * 1000);
+                            return day.toLocaleDateString('en-US', { weekday: 'short' });
+                        });
+                    case 'month':
+                        return Array.from({length: 30}, (_, i) => {
+                            const day = new Date(now.getTime() - (29-i) * 24 * 60 * 60 * 1000);
+                            return day.getDate().toString();
+                        });
+                    case 'year':
+                        return Array.from({length: 12}, (_, i) => {
+                            const month = new Date(now.getFullYear(), now.getMonth() - (11-i), 1);
+                            return month.toLocaleDateString('en-US', { month: 'short' });
+                        });
+                    case 'all':
+                        return ['2022', '2023', '2024'];
+                    default:
+                        return Array.from({length: 24}, (_, i) => `${i}:00`);
+                }
+            }
+            
+            getPerformanceData(period) {
+                // Generate realistic performance data based on period
+                switch(period) {
+                    case 'day':
+                        return Array.from({length: 24}, () => 40 + Math.random() * 30);
+                    case 'week':
+                        return Array.from({length: 7}, () => 45 + Math.random() * 25);
+                    case 'month':
+                        return Array.from({length: 30}, () => 42 + Math.random() * 28);
+                    case 'year':
+                        return Array.from({length: 12}, () => 38 + Math.random() * 35);
+                    case 'all':
+                        return [52, 48, 45]; // Historical yearly averages
+                    default:
+                        return Array.from({length: 24}, () => 40 + Math.random() * 30);
+                }
+            }
+            
+            updatePerformanceStats(period, data) {
+                const avg = data.reduce((a, b) => a + b, 0) / data.length;
+                const peak = Math.max(...data);
+                
+                document.getElementById('avgResponseTime').textContent = Math.round(avg) + 'ms';
+                document.getElementById('peakResponseTime').textContent = Math.round(peak) + 'ms';
+                
+                // Update uptime based on period
+                const uptimeValues = {
+                    'day': '99.98%',
+                    'week': '99.95%',
+                    'month': '99.92%',
+                    'year': '99.87%',
+                    'all': '99.85%'
+                };
+                document.getElementById('uptimePercent').textContent = uptimeValues[period] || '99.97%';
+            }
+
+            startRealTimeUpdates() {
+                // Update time every second
+                setInterval(() => this.updateTime(), 1000);
+
+                // Update metrics every 5 seconds
+                setInterval(() => this.updateMetrics(), 5000);
+                
+                // Update performance chart every 10 seconds (real-time)
+                setInterval(() => this.updateRealTimePerformance(), 10000);
+                
+                // Setup sidebar navigation
+                this.setupNavigation();
+            }
+            
+            updateRealTimePerformance() {
+                if (this.performanceChart) {
+                    const activeBtn = document.querySelector('.time-btn.active');
+                    const period = activeBtn ? activeBtn.getAttribute('data-period') : 'day';
+                    
+                    // Only update if showing current day for real-time effect
+                    if (period === 'day') {
+                        const newData = this.getPerformanceData('day');
+                        this.performanceChart.data.datasets[0].data = newData;
+                        this.performanceChart.update('none'); // No animation for real-time
+                        
+                        // Update stats
+                        this.updatePerformanceStats('day', newData);
+                    }
+                }
+            }
+            
+            setupNavigation() {
+                const navItems = document.querySelectorAll('.nav-item');
+                
+                navItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Remove active class from all items
+                        navItems.forEach(nav => nav.classList.remove('active'));
+                        
+                        // Add active class to clicked item
+                        item.classList.add('active');
+                        
+                        // Get view type
+                        const viewType = item.getAttribute('data-view');
+                        
+                        // Update main content based on selection
+                        this.switchView(viewType);
+                    });
+                });
+            }
+            
+            switchView(viewType) {
+                const mainContent = document.querySelector('.main-content');
+                
+                // Clear current content
+                mainContent.innerHTML = '';
+                
+                // Load appropriate view
+                switch(viewType) {
+                    case 'overview':
+                        this.loadOverviewView(mainContent);
+                        break;
+                    case 'agents':
+                        this.loadAgentsView(mainContent);
+                        break;
+                    case 'analytics':
+                        this.loadAnalyticsView(mainContent);
+                        break;
+                    case 'hunting':
+                        this.loadThreatHuntingView(mainContent);
+                        break;
+                    case 'incidents':
+                        this.loadIncidentResponseView(mainContent);
+                        break;
+                    case 'access':
+                        this.loadAccessControlView(mainContent);
+                        break;
+                    default:
+                        this.loadOverviewView(mainContent);
+                }
+            }
+            
+            loadOverviewView(container) {
+                container.innerHTML = this.getOverviewHTML();
+                this.initializeComponents();
+            }
+            
+            loadAgentsView(container) {
+                container.innerHTML = `
+                    <div class="view-header">
+                        <h1>AI Agents Management</h1>
+                        <p>Monitor and control AI security agents</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card" style="grid-column: span 12;">
+                            <div class="card-header">
+                                <div class="card-title">Agent Control Panel</div>
+                            </div>
+                            <div class="agent-control-grid">
+                                <div class="agent-detail-card">
+                                    <div class="agent-icon">🧠</div>
+                                    <div class="agent-info">
+                                        <h3>GPT-5 Strategic Agent</h3>
+                                        <p>Advanced threat analysis and strategic planning</p>
+                                        <div class="agent-stats">
+                                            <span>Response Time: 120ms</span>
+                                            <span>Accuracy: 95%</span>
+                                            <span>Tasks: 1,247</span>
+                                        </div>
+                                        <button class="btn-test" onclick="testAgent('gpt5')">Test Agent</button>
+                                    </div>
+                                </div>
+                                <div class="agent-detail-card">
+                                    <div class="agent-icon">📝</div>
+                                    <div class="agent-info">
+                                        <h3>Claude Code Reviewer</h3>
+                                        <p>Code vulnerability analysis and security audit</p>
+                                        <div class="agent-stats">
+                                            <span>Response Time: 180ms</span>
+                                            <span>Accuracy: 88%</span>
+                                            <span>Tasks: 856</span>
+                                        </div>
+                                        <button class="btn-test" onclick="testAgent('claude')">Test Agent</button>
+                                    </div>
+                                </div>
+                                <div class="agent-detail-card">
+                                    <div class="agent-icon">🔍</div>
+                                    <div class="agent-info">
+                                        <h3>Grok Pattern Hunter</h3>
+                                        <p>Advanced pattern recognition and anomaly detection</p>
+                                        <div class="agent-stats">
+                                            <span>Response Time: 95ms</span>
+                                            <span>Accuracy: 91%</span>
+                                            <span>Tasks: 2,134</span>
+                                        </div>
+                                        <button class="btn-test" onclick="testAgent('grok')">Test Agent</button>
+                                    </div>
+                                </div>
+                                <div class="agent-detail-card">
+                                    <div class="agent-icon">⚡</div>
+                                    <div class="agent-info">
+                                        <h3>Mistral Speed Processor</h3>
+                                        <p>High-speed log analysis and real-time processing</p>
+                                        <div class="agent-stats">
+                                            <span>Response Time: 45ms</span>
+                                            <span>Accuracy: 82%</span>
+                                            <span>Tasks: 5,678</span>
+                                        </div>
+                                        <button class="btn-test" onclick="testAgent('mistral')">Test Agent</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            loadThreatHuntingView(container) {
+                container.innerHTML = `
+                    <div class="view-header">
+                        <h1>Threat Hunting & Reverse Engineering</h1>
+                        <p>Proactive threat detection, analysis, and reverse engineering</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card" style="grid-column: span 6;">
+                            <div class="card-header">
+                                <div class="card-title">Manual Attack Simulation</div>
+                            </div>
+                            <div class="attack-simulator">
+                                <div class="attack-options">
+                                    <div class="attack-type" onclick="simulateAttack('sql_injection')">
+                                        <div class="attack-icon">💉</div>
+                                        <div class="attack-info">
+                                            <h4>SQL Injection</h4>
+                                            <p>Test database security</p>
+                                        </div>
+                                    </div>
+                                    <div class="attack-type" onclick="simulateAttack('xss')">
+                                        <div class="attack-icon">🕷️</div>
+                                        <div class="attack-info">
+                                            <h4>Cross-Site Scripting</h4>
+                                            <p>Test XSS protection</p>
+                                        </div>
+                                    </div>
+                                    <div class="attack-type" onclick="simulateAttack('command_injection')">
+                                        <div class="attack-icon">⚡</div>
+                                        <div class="attack-info">
+                                            <h4>Command Injection</h4>
+                                            <p>Test command execution</p>
+                                        </div>
+                                    </div>
+                                    <div class="attack-type" onclick="simulateAttack('path_traversal')">
+                                        <div class="attack-icon">📁</div>
+                                        <div class="attack-info">
+                                            <h4>Path Traversal</h4>
+                                            <p>Test file system access</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="grid-column: span 6;">
+                            <div class="card-header">
+                                <div class="card-title">Reverse Engineering Tools</div>
+                            </div>
+                            <div class="reverse-engineering-tools">
+                                <div class="tool-section">
+                                    <h4>Binary Analysis</h4>
+                                    <input type="file" id="binaryFile" accept=".exe,.dll,.bin,.elf" style="margin-bottom: 1rem;">
+                                    <button class="action-btn scan" onclick="analyzeBinary()">🔍 Analyze Binary</button>
+                                </div>
+                                <div class="tool-section" style="margin-top: 1rem;">
+                                    <h4>Source Code Analysis</h4>
+                                    <input type="file" id="sourceFile" accept=".py,.js,.c,.cpp,.go,.rs" style="margin-bottom: 1rem;">
+                                    <button class="action-btn scan" onclick="analyzeSourceCode()">📝 Analyze Source</button>
+                                </div>
+                                <div class="tool-section" style="margin-top: 1rem;">
+                                    <h4>IOC Extraction</h4>
+                                    <input type="file" id="iocFile" style="margin-bottom: 1rem;">
+                                    <button class="action-btn scan" onclick="extractIOCs()">🎯 Extract IOCs</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="grid-column: span 12;">
+                            <div class="card-header">
+                                <div class="card-title">Analysis Results</div>
+                            </div>
+                            <div id="analysisResults" class="analysis-results">
+                                <p>Upload a file and select an analysis type to begin</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            loadAnalyticsView(container) {
+                container.innerHTML = `
+                    <div class="view-header">
+                        <h1>Security Analytics</h1>
+                        <p>Advanced threat analytics and reporting</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card" style="grid-column: span 6;">
+                            <div class="card-header">
+                                <div class="card-title">Attack Vectors</div>
+                            </div>
+                            <div class="attack-vectors">
+                                <div class="vector-item">
+                                    <span class="vector-name">SQL Injection</span>
+                                    <div class="vector-bar"><div class="vector-fill" style="width: 65%"></div></div>
+                                    <span class="vector-count">1,247</span>
+                                </div>
+                                <div class="vector-item">
+                                    <span class="vector-name">XSS Attacks</span>
+                                    <div class="vector-bar"><div class="vector-fill" style="width: 45%"></div></div>
+                                    <span class="vector-count">856</span>
+                                </div>
+                                <div class="vector-item">
+                                    <span class="vector-name">Command Injection</span>
+                                    <div class="vector-bar"><div class="vector-fill" style="width: 30%"></div></div>
+                                    <span class="vector-count">567</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="grid-column: span 6;">
+                            <div class="card-header">
+                                <div class="card-title">Response Actions</div>
+                            </div>
+                            <div class="response-actions">
+                                <button class="action-btn emergency" onclick="triggerEmergency()">🚨 Emergency Lockdown</button>
+                                <button class="action-btn scan" onclick="fullSystemScan()">🔍 Full System Scan</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            loadIncidentResponseView(container) {
+                container.innerHTML = `
+                    <div class="view-header">
+                        <h1>Incident Response</h1>
+                        <p>Emergency response and incident management</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card" style="grid-column: span 12;">
+                            <div class="card-header">
+                                <div class="card-title">Active Incidents</div>
+                            </div>
+                            <div class="incidents-list">
+                                <div class="incident-item critical">
+                                    <div class="incident-severity">CRITICAL</div>
+                                    <div class="incident-details">
+                                        <h4>Advanced Persistent Threat Detected</h4>
+                                        <p>Multiple attack vectors from 203.0.113.5</p>
+                                        <span class="incident-time">2 minutes ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            loadAccessControlView(container) {
+                container.innerHTML = `
+                    <div class="view-header">
+                        <h1>Access Control</h1>
+                        <p>User access management and permissions</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card" style="grid-column: span 12;">
+                            <div class="card-header">
+                                <div class="card-title">User Sessions</div>
+                            </div>
+                            <div class="sessions-table">
+                                <div class="session-row">
+                                    <span>admin - Administrator - 127.0.0.1 - Active now</span>
+                                </div>
+                                <div class="session-row">
+                                    <span>analyst_01 - Security Analyst - 192.168.1.50 - 2 min ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            getOverviewHTML() {
+                return `
+                    <div class="dashboard-grid">
+                        <!-- Threat Map -->
+                        <div class="card threat-map">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">Global Threat Map</div>
+                                    <div class="card-subtitle">Real-time attack visualization</div>
+                                </div>
+                            </div>
+                            <div class="map-container" id="threatMap"></div>
+                        </div>
+
+                        <!-- Agent Status -->
+                        <div class="card agent-status">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">AI Agent Status</div>
+                                    <div class="card-subtitle">Active monitoring agents</div>
+                                </div>
+                            </div>
+                            <div class="agent-grid">
+                                <div class="agent-card active">
+                                    <div class="agent-name">GPT-5</div>
+                                    <div class="agent-status-text">Strategic Analysis</div>
+                                </div>
+                                <div class="agent-card active">
+                                    <div class="agent-name">Claude</div>
+                                    <div class="agent-status-text">Code Review</div>
+                                </div>
+                                <div class="agent-card active">
+                                    <div class="agent-name">Grok</div>
+                                    <div class="agent-status-text">Pattern Recognition</div>
+                                </div>
+                                <div class="agent-card active">
+                                    <div class="agent-name">Mistral</div>
+                                    <div class="agent-status-text">Speed Processing</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metrics Row -->
+                        <div class="metrics-row">
+                            <div class="metric-card">
+                                <div class="metric-value" id="threatsBlocked">1,247</div>
+                                <div class="metric-label">Threats Blocked</div>
+                                <div class="metric-change positive">+12% from yesterday</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" id="systemUptime">99.97%</div>
+                                <div class="metric-label">System Uptime</div>
+                                <div class="metric-change positive">+0.02% this month</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" id="responseTime">47ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                                <div class="metric-change positive">-8ms improvement</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" id="activeConnections">156</div>
+                                <div class="metric-label">Active Connections</div>
+                                <div class="metric-change positive">+23 new sessions</div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Feed -->
+                        <div class="card activity-feed">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">Security Events</div>
+                                    <div class="card-subtitle">Recent activity log</div>
+                                </div>
+                            </div>
+                            <div class="activity-list" id="activityFeed"></div>
+                        </div>
+
+                        <!-- Performance Chart -->
+                        <div class="card performance-chart">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">System Performance</div>
+                                    <div class="card-subtitle" id="performanceSubtitle">Real-time monitoring</div>
+                                </div>
+                            </div>
+                            <div class="time-selector">
+                                <button class="time-btn active" data-period="day">Day</button>
+                                <button class="time-btn" data-period="week">Week</button>
+                                <button class="time-btn" data-period="month">Month</button>
+                                <button class="time-btn" data-period="year">Year</button>
+                                <button class="time-btn" data-period="all">All</button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                            <div class="performance-stats">
+                                <div class="perf-stat">
+                                    <div class="perf-stat-value" id="avgResponseTime">47ms</div>
+                                    <div class="perf-stat-label">Avg Response</div>
+                                </div>
+                                <div class="perf-stat">
+                                    <div class="perf-stat-value" id="peakResponseTime">89ms</div>
+                                    <div class="perf-stat-label">Peak Response</div>
+                                </div>
+                                <div class="perf-stat">
+                                    <div class="perf-stat-value" id="uptimePercent">99.97%</div>
+                                    <div class="perf-stat-label">Uptime</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateMetrics() {
+                // Simulate real-time metric updates
+                const threatsBlocked = document.getElementById('threatsBlocked');
+                const currentValue = parseInt(threatsBlocked.textContent.replace(',', ''));
+                threatsBlocked.textContent = (currentValue + Math.floor(Math.random() * 3)).toLocaleString();
+
+                const responseTime = document.getElementById('responseTime');
+                const newTime = 40 + Math.floor(Math.random() * 20);
+                responseTime.textContent = newTime + 'ms';
+            }
+        }
+
+        // Global functions for attack simulation and agent testing
+        window.simulateAttack = async function(attackType) {
+            const resultsContainer = document.getElementById('analysisResults');
+            resultsContainer.innerHTML = '<p>Simulating attack...</p>';
+            
+            try {
+                const response = await fetch('/api/test-attack', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer demo-token'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    resultsContainer.innerHTML = `
+                        <div class="attack-result success">
+                            <h4>Attack Simulated: ${attackType.replace('_', ' ').toUpperCase()}</h4>
+                            <p><strong>Status:</strong> ${result.result?.blocked ? 'Blocked' : 'Detected'}</p>
+                            <p><strong>Confidence:</strong> ${(result.result?.confidence * 100).toFixed(1)}%</p>
+                            <p><strong>Threat Level:</strong> ${result.result?.severity || 'Medium'}</p>
+                            <p><strong>Response Time:</strong> <50ms</p>
+                        </div>
+                    `;
+                } else {
+                    resultsContainer.innerHTML = '<p class="error">Attack simulation failed</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="error">Connection error</p>';
+            }
+        };
+        
+        window.analyzeBinary = async function() {
+            const fileInput = document.getElementById('binaryFile');
+            const resultsContainer = document.getElementById('analysisResults');
+            
+            if (!fileInput.files[0]) {
+                resultsContainer.innerHTML = '<p class="error">Please select a binary file</p>';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('analysis_type', 'comprehensive');
+            
+            resultsContainer.innerHTML = '<p>Analyzing binary file...</p>';
+            
+            try {
+                const response = await fetch('/api/reverse-engineering/analyze-binary', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    resultsContainer.innerHTML = `
+                        <div class="analysis-result">
+                            <h4>Binary Analysis: ${result.filename}</h4>
+                            <div class="analysis-grid">
+                                <div class="analysis-section">
+                                    <h5>File Information</h5>
+                                    <p><strong>Type:</strong> ${result.binary_analysis?.file_type || 'Unknown'}</p>
+                                    <p><strong>Architecture:</strong> ${result.binary_analysis?.architecture || 'Unknown'}</p>
+                                    <p><strong>Entry Point:</strong> ${result.binary_analysis?.entry_point || 'N/A'}</p>
+                                </div>
+                                <div class="analysis-section">
+                                    <h5>Threat Assessment</h5>
+                                    <p><strong>Threat Score:</strong> ${result.malware_analysis?.threat_score || 0}/100</p>
+                                    <p><strong>Malware Signatures:</strong> ${result.malware_analysis?.signature_matches?.length || 0}</p>
+                                    <p><strong>Vulnerabilities:</strong> ${result.binary_analysis?.vulnerabilities?.length || 0}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultsContainer.innerHTML = '<p class="error">Binary analysis failed</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="error">Analysis error</p>';
+            }
+        };
+        
+        window.analyzeSourceCode = async function() {
+            const fileInput = document.getElementById('sourceFile');
+            const resultsContainer = document.getElementById('analysisResults');
+            
+            if (!fileInput.files[0]) {
+                resultsContainer.innerHTML = '<p class="error">Please select a source code file</p>';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            resultsContainer.innerHTML = '<p>Analyzing source code...</p>';
+            
+            try {
+                const response = await fetch('/api/reverse-engineering/analyze-source-code', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    resultsContainer.innerHTML = `
+                        <div class="analysis-result">
+                            <h4>Source Code Analysis: ${result.filename}</h4>
+                            <div class="analysis-grid">
+                                <div class="analysis-section">
+                                    <h5>Code Statistics</h5>
+                                    <p><strong>Language:</strong> ${result.language || 'Unknown'}</p>
+                                    <p><strong>Functions:</strong> ${result.source_analysis?.functions?.length || 0}</p>
+                                    <p><strong>Classes:</strong> ${result.source_analysis?.classes?.length || 0}</p>
+                                </div>
+                                <div class="analysis-section">
+                                    <h5>Security Issues</h5>
+                                    <p><strong>Vulnerabilities:</strong> ${result.source_analysis?.vulnerabilities?.length || 0}</p>
+                                    <p><strong>Hardcoded Secrets:</strong> ${result.hardcoded_secrets?.length || 0}</p>
+                                    <p><strong>High-Risk APIs:</strong> ${result.api_calls?.filter(api => api.risk_level === 'High').length || 0}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultsContainer.innerHTML = '<p class="error">Source code analysis failed</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="error">Analysis error</p>';
+            }
+        };
+        
+        window.extractIOCs = async function() {
+            const fileInput = document.getElementById('iocFile');
+            const resultsContainer = document.getElementById('analysisResults');
+            
+            if (!fileInput.files[0]) {
+                resultsContainer.innerHTML = '<p class="error">Please select a file for IOC extraction</p>';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            resultsContainer.innerHTML = '<p>Extracting IOCs...</p>';
+            
+            try {
+                const response = await fetch('/api/reverse-engineering/extract-iocs', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    resultsContainer.innerHTML = `
+                        <div class="analysis-result">
+                            <h4>IOC Extraction: ${result.filename}</h4>
+                            <div class="analysis-grid">
+                                <div class="analysis-section">
+                                    <h5>Indicators Found</h5>
+                                    <p><strong>File Hashes:</strong> ${result.iocs?.file_hashes?.length || 0}</p>
+                                    <p><strong>Domains:</strong> ${result.iocs?.domains?.length || 0}</p>
+                                    <p><strong>IP Addresses:</strong> ${result.iocs?.ips?.length || 0}</p>
+                                    <p><strong>URLs:</strong> ${result.iocs?.urls?.length || 0}</p>
+                                </div>
+                                <div class="analysis-section">
+                                    <h5>YARA Rule Generated</h5>
+                                    <textarea readonly style="width: 100%; height: 100px; font-family: monospace; font-size: 0.8rem;">${result.yara_rule || 'No rule generated'}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultsContainer.innerHTML = '<p class="error">IOC extraction failed</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="error">Extraction error</p>';
+            }
+        };
+        
+        window.testAgent = async function(agentName) {
+            alert(`Testing ${agentName.toUpperCase()} agent...`);
+        };
+        
+        window.triggerEmergency = function() {
+            alert('Emergency lockdown activated!');
+        };
+        
+        window.fullSystemScan = function() {
+            alert('Full system scan initiated...');
+        };
+        
+        // Add slide-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            .attack-result, .analysis-result {
+                background: rgba(16, 185, 129, 0.1);
+                border: 1px solid rgba(16, 185, 129, 0.3);
+                border-radius: 6px;
+                padding: 1rem;
+            }
+            .attack-result h4, .analysis-result h4 {
+                color: var(--accent-success);
+                margin-bottom: 0.5rem;
+            }
+            .attack-result p, .analysis-result p {
+                color: var(--text-secondary);
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+            }
+            .analysis-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            .analysis-section {
+                background: rgba(26, 31, 46, 0.3);
+                padding: 1rem;
+                border-radius: 6px;
+            }
+            .analysis-section h5 {
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .tool-section {
+                padding: 1rem;
+                background: rgba(26, 31, 46, 0.3);
+                border-radius: 6px;
+                margin-bottom: 1rem;
+            }
+            .tool-section h4 {
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .tool-section input[type="file"] {
+                width: 100%;
+                padding: 0.5rem;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-subtle);
+                border-radius: 4px;
+                color: var(--text-primary);
+            }
+            .error {
+                color: var(--accent-critical);
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new EnterpriseDashboard();
+        });
+    </script>
+</body>
+</html>

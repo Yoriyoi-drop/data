@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vault
+  namespace: ai-hub
+spec:
+  serviceName: "vault"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - name: vault
+        image: hashicorp/vault:1.16
+        args: ["server"]
+        ports:
+        - containerPort: 8200
+        env:
+        - name: VAULT_LOCAL_CONFIG
+          value: |
+            {
+              "ui": true,
+              "cluster_name": "vault-ai-hub",
+              "storage": {"raft": {"path": "/vault/data"}},
+              "listener": {"tcp": {"address": "0.0.0.0:8200", "tls_disable": 1}},
+              "api_addr": "http://$(POD_IP):8200"
+            }
+        envFrom:
+        - configMapRef: {name: vault-config}
+        - secretRef: {name: vault-secrets}
+        volumeMounts:
+        - name: data
+          mountPath: /vault/data
+      serviceAccountName: vault
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault
+  namespace: ai-hub
+spec:
+  selector:
+    app: vault
+  ports:
+  - name: http
+    port: 8200
+    targetPort: 8200
+  clusterIP: None

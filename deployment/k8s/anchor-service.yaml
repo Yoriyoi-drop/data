@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anchor-service
+  namespace: ai-hub
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: anchor-service
+  template:
+    metadata:
+      labels:
+        app: anchor-service
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - name: anchor
+        image: registry.example.com/ai-hub/anchor:stable
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ETH_RPC
+          valueFrom:
+            secretKeyRef:
+              name: anchor-secrets
+              key: eth_rpc
+        - name: VAULT_ADDR
+          value: "https://vault.internal"
+        - name: REGION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['topology.kubernetes.io/region']
+        - name: ANCHOR_INTERVAL_SEC
+          value: "900"
+        ports:
+        - containerPort: 8080
+        resources:
+          requests: { cpu: "100m", memory: "128Mi" }
+          limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anchor-service
+  namespace: ai-hub
+spec:
+  selector:
+    app: anchor-service
+  ports:
+  - port: 80
+    targetPort: 8080

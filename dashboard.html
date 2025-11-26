@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Infinite AI Security Control Center</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #0b0c10;
+      color: #c5c6c7;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #1f2833;
+    }
+    .card {
+      background-color: #1f2833;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .card-title {
+      color: #66fcf1;
+    }
+    .status-badge {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+    .status-online { background-color: #45a29e; color: white; }
+    .status-offline { background-color: #c5c6c7; color: #0b0c10; }
+    .status-error { background-color: #ff4757; color: white; }
+    #logs {
+      height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      background: #0b0c10;
+      color: #66fcf1;
+      padding: 10px;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">🛡️ Infinite AI Security Dashboard</span>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <!-- Row 1 -->
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Active Nodes</h5>
+          <h2 id="activeNodes">0</h2>
+          <span class="status-badge status-online">Operational</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Threats Detected</h5>
+          <h2 id="threatsDetected">0</h2>
+          <span class="status-badge status-error">Monitoring</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">CPU Load</h5>
+          <h2 id="cpuLoad">0%</h2>
+          <span class="status-badge status-online">Stable</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Success Rate</h5>
+          <h2 id="successRate">100%</h2>
+          <span class="status-badge status-online">OK</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Charts -->
+    <div class="row g-3 mt-3">
+      <div class="col-md-8">
+        <div class="card p-3">
+          <h5 class="card-title">Threat Activity (Last 10 mins)</h5>
+          <canvas id="threatChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5 class="card-title">System Node Status</h5>
+          <canvas id="nodeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Logs -->
+    <div class="row g-3 mt-3">
+      <div class="col-md-12">
+        <div class="card p-3">
+          <h5 class="card-title">Real-Time Logs</h5>
+          <div id="logs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Chart: Threats Over Time ===
+    const threatCtx = document.getElementById('threatChart');
+    const threatChart = new Chart(threatCtx, {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 10}, (_, i) => `${i+1} min`),
+        datasets: [{
+          label: 'Threats Detected',
+          data: Array(10).fill(0),
+          borderColor: '#66fcf1',
+          backgroundColor: 'rgba(102,252,241,0.1)',
+          tension: 0.3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: { y: { beginAtZero: true }}
+      }
+    });
+
+    // === Chart: Node Status ===
+    const nodeCtx = document.getElementById('nodeChart');
+    const nodeChart = new Chart(nodeCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Online', 'Error', 'Offline'],
+        datasets: [{
+          data: [12, 2, 1],
+          backgroundColor: ['#45a29e', '#ff4757', '#c5c6c7']
+        }]
+      },
+      options: { plugins: { legend: { labels: { color: '#c5c6c7' }}}}
+    });
+
+    // === Real-Time Simulation ===
+    function updateDashboard() {
+      const active = Math.floor(Math.random() * 50) + 150;
+      const threats = Math.floor(Math.random() * 10);
+      const cpu = Math.floor(Math.random() * 60) + 20;
+      const success = (100 - Math.random() * 5).toFixed(2);
+
+      document.getElementById('activeNodes').innerText = active;
+      document.getElementById('threatsDetected').innerText = threats;
+      document.getElementById('cpuLoad').innerText = cpu + '%';
+      document.getElementById('successRate').innerText = success + '%';
+
+      threatChart.data.datasets[0].data.shift();
+      threatChart.data.datasets[0].data.push(threats);
+      threatChart.update();
+
+      const logs = document.getElementById('logs');
+      const now = new Date().toLocaleTimeString();
+      const messages = [
+        `Node_${Math.floor(Math.random()*200)}: scan complete ✅`,
+        `Threat detected on Node_${Math.floor(Math.random()*50)} 🚨`,
+        `Firewall updated at ${now}`,
+        `AI agent response time ${Math.random().toFixed(2)}s`,
+      ];
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      logs.innerHTML += `[${now}] ${msg}<br>`;
+      logs.scrollTop = logs.scrollHeight;
+    }
+
+    setInterval(updateDashboard, 2000);
+  </script>
+</body>
+</html>

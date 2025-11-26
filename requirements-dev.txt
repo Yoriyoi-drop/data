@@ -1,0 +1,44 @@
+# Development Dependencies
+# Install with: pip install -r requirements-dev.txt
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-asyncio==0.21.1
+pytest-mock==3.12.0
+pytest-xdist==3.5.0
+httpx==0.25.2
+
+# Linting & Formatting
+flake8==6.1.0
+black==23.12.1
+isort==5.13.2
+pylint==3.0.3
+mypy==1.7.1
+
+# Security
+bandit==1.7.5
+safety==2.3.5
+detect-secrets==1.4.0
+
+# Code Quality
+coverage==7.3.4
+radon==6.0.1
+mccabe==0.7.0
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.5.3
+mkdocstrings==0.24.0
+
+# Development Tools
+ipython==8.18.1
+ipdb==0.13.13
+watchdog==3.0.0
+python-dotenv==1.0.0
+
+# Performance Testing
+locust==2.20.0
+
+# Pre-commit hooks
+pre-commit==3.6.0

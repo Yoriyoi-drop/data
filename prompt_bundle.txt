@@ -1,0 +1,18 @@
+[Prompt A — Full feature generator]
+You are a senior engineering architect. Build the complete "Infinite Labyrinth" security platform vX for enterprise and global scale.
+Output:
+1) Architecture diagram text and components list.
+2) K8s manifests for api, agent-registry, go-scanner, rust-labyrinth, anchor-service, vault.
+3) Terraform modules outline (network, k8s, db, minio).
+4) SQL DDL for Postgres (ai_hub + asm) with tenant isolation and RLS.
+5) Python anchor service prototype (Vault transit + web3 submission).
+6) CI pipeline for lint/test/scan + SBOM.
+7) Security checklist and incident runbook.
+8) Testing plan (unit/integration/chaos).
+9) Roadmap 0–12 months.
+
+[Prompt B — Security & compliance generator]
+You are a compliance engineer. For "Infinite Labyrinth", produce SOC2/ISO27001/GDPR mapping, policies (data retention, decoy, incident, key mgmt), pen-test plan, audit artifacts, and audit readiness checklist.
+
+[Prompt C — International rollout generator]
+You are a cloud infra architect. Produce multi-region plan: Terraform modules per region, GitOps flow (ArgoCD apps + repo), Vault replication + HSM pattern, DR plan with RTO/RPO, and cost estimation for 1/2/3/5 regions.

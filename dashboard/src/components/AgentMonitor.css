@@ -83,10 +83,10 @@
   animation: pulse 2s infinite;
 }
 
-.agent-model {
-  color: #888;
-  font-size: 0.8rem;
-  text-transform: uppercase;
+.agent-status-text {
+  color: #00ff88;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .agent-metrics {
@@ -141,27 +141,7 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.7rem;
-  text-transform: capitalize;
   border: 1px solid rgba(0, 255, 136, 0.2);
-}
-
-.capability-tag.more {
-  background: rgba(255, 170, 0, 0.1);
-  color: #ffaa00;
-  border-color: rgba(255, 170, 0, 0.2);
-}
-
-.agent-alert {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ff4444;
-  background: rgba(255, 68, 68, 0.1);
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 68, 68, 0.2);
-  margin-top: 1rem;
-  font-size: 0.8rem;
 }
 
 .queue-status {

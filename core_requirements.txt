@@ -1,0 +1,15 @@
+# Dependencies minimal untuk fungsionalitas inti LangGraph Multi-Tier
+# Kompatibel dengan Python 3.14
+
+# Core dependencies
+pydantic>=2.9.0
+pyyaml>=6.0.2
+
+# Async support
+asyncio-mqtt>=0.15.0
+
+# Data processing
+numpy>=1.26.0
+
+# Python 3.14 compatibility
+typing-extensions>=4.10.0

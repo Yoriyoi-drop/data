@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ai-hub-api-pdb
+  namespace: ai-hub
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: ai-hub-api

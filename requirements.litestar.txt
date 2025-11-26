@@ -1,0 +1,11 @@
+# Litestar skeleton (pure-Python friendly) for Python 3.14
+litestar==2.8.3
+uvicorn==0.24.0
+marshmallow==3.21.3
+pg8000==1.30.5
+passlib==1.7.4
+PyJWT==2.8.0
+prometheus-client==0.19.0
+httpx==0.25.2
+aiofiles==23.2.1
+python-multipart==0.0.6

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Infinite AI Security Control Center - Live</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #0b0c10;
+      color: #c5c6c7;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #1f2833;
+    }
+    .card {
+      background-color: #1f2833;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .card-title {
+      color: #66fcf1;
+    }
+    .status-badge {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+    .status-online { background-color: #45a29e; color: white; }
+    .status-offline { background-color: #c5c6c7; color: #0b0c10; }
+    .status-error { background-color: #ff4757; color: white; }
+    #logs {
+      height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      background: #0b0c10;
+      color: #66fcf1;
+      padding: 10px;
+      border-radius: 0.5rem;
+    }
+    .connection-status {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: #ff4757;
+      color: white;
+      font-size: 0.8rem;
+    }
+    .connection-status.connected {
+      background-color: #45a29e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="connection-status" id="connectionStatus">Disconnected</div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">🛡️ Infinite AI Security Dashboard</span>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <!-- Row 1 -->
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Active Nodes</h5>
+          <h2 id="activeNodes">0</h2>
+          <span class="status-badge status-online">Operational</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Threats Detected</h5>
+          <h2 id="threatsDetected">0</h2>
+          <span class="status-badge status-error">Monitoring</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">CPU Load</h5>
+          <h2 id="cpuLoad">0%</h2>
+          <span class="status-badge status-online">Stable</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center p-3">
+          <h5 class="card-title">Success Rate</h5>
+          <h2 id="successRate">100%</h2>
+          <span class="status-badge status-online">OK</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Charts -->
+    <div class="row g-3 mt-3">
+      <div class="col-md-8">
+        <div class="card p-3">
+          <h5 class="card-title">Threat Activity (Last 10 mins)</h5>
+          <canvas id="threatChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5 class="card-title">System Node Status</h5>
+          <canvas id="nodeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Logs -->
+    <div class="row g-3 mt-3">
+      <div class="col-md-12">
+        <div class="card p-3">
+          <h5 class="card-title">Real-Time Logs</h5>
+          <div id="logs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Chart: Threats Over Time ===
+    const threatCtx = document.getElementById('threatChart');
+    const threatChart = new Chart(threatCtx, {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 10}, (_, i) => `${i+1} min`),
+        datasets: [{
+          label: 'Threats Detected',
+          data: Array(10).fill(0),
+          borderColor: '#66fcf1',
+          backgroundColor: 'rgba(102,252,241,0.1)',
+          tension: 0.3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: { y: { beginAtZero: true }}
+      }
+    });
+
+    // === Chart: Node Status ===
+    const nodeCtx = document.getElementById('nodeChart');
+    const nodeChart = new Chart(nodeCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Online', 'Error', 'Offline'],
+        datasets: [{
+          data: [12, 2, 1],
+          backgroundColor: ['#45a29e', '#ff4757', '#c5c6c7']
+        }]
+      },
+      options: { 
+        plugins: { 
+          legend: { labels: { color: '#c5c6c7' }}
+        }
+      }
+    });
+
+    // === WebSocket Connection ===
+    let socket;
+    let isConnected = false;
+
+    function connectWebSocket() {
+      try {
+        socket = new WebSocket('ws://localhost:8000/ws');
+        
+        socket.onopen = function(event) {
+          console.log('Connected to WebSocket');
+          isConnected = true;
+          document.getElementById('connectionStatus').textContent = 'Connected';
+          document.getElementById('connectionStatus').className = 'connection-status connected';
+        };
+        
+        socket.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+          updateDashboard(data.status);
+          updateLogs(data.logs);
+        };
+        
+        socket.onclose = function(event) {
+          console.log('Disconnected from WebSocket');
+          isConnected = false;
+          document.getElementById('connectionStatus').textContent = 'Disconnected';
+          document.getElementById('connectionStatus').className = 'connection-status';
+          
+          // Coba konek ulang setelah 5 detik
+          setTimeout(connectWebSocket, 5000);
+        };
+        
+        socket.onerror = function(error) {
+          console.error('WebSocket error:', error);
+          isConnected = false;
+          document.getElementById('connectionStatus').textContent = 'Error';
+          document.getElementById('connectionStatus').className = 'connection-status';
+        };
+      } catch (e) {
+        console.error('Failed to connect WebSocket:', e);
+        setTimeout(connectWebSocket, 5000);
+      }
+    }
+
+    function updateDashboard(status) {
+      document.getElementById('activeNodes').innerText = status.active_nodes;
+      document.getElementById('threatsDetected').innerText = status.threats_detected;
+      document.getElementById('cpuLoad').innerText = status.cpu_load + '%';
+      document.getElementById('successRate').innerText = status.success_rate + '%';
+
+      // Update threat chart
+      threatChart.data.datasets[0].data = status.threat_history;
+      threatChart.update();
+
+      // Update node chart
+      nodeChart.data.datasets[0].data = [status.online_nodes, status.error_nodes, status.offline_nodes];
+      nodeChart.update();
+    }
+
+    function updateLogs(logs) {
+      const logsContainer = document.getElementById('logs');
+      logsContainer.innerHTML = '';
+      
+      logs.forEach(log => {
+        logsContainer.innerHTML += log + '<br>';
+      });
+      
+      logsContainer.scrollTop = logsContainer.scrollHeight;
+    }
+
+    // Mulai koneksi WebSocket
+    connectWebSocket();
+  </script>
+</body>
+</html>

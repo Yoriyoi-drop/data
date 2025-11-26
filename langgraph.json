@@ -1,0 +1,15 @@
+{
+  "dockerfile_lines": [
+    "COPY pyproject.toml poetry.lock* ./",
+    "RUN poetry install --no-interaction --no-dev",
+    "COPY . .",
+    "RUN poetry install --no-interaction --no-dev"
+  ],
+  "python_version": "3.11",
+  "dependencies": [
+    "langgraph-cli[inmem]>=0.0.25",
+    "langchain-openai",
+    "fastapi",
+    "uvicorn[standard]"
+  ]
+}

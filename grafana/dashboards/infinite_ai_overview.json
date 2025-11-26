@@ -1,0 +1,36 @@
+{
+  "title": "Infinite AI Overview",
+  "uid": "infinite-ai-overview",
+  "schemaVersion": 36,
+  "version": 1,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "API Error Rate",
+      "targets": [
+        { "expr": "sum(rate(http_requests_total{job=\"api\",status=~\"5..\"}[5m]))" }
+      ]
+    },
+    {
+      "type": "gauge",
+      "title": "Avg Latency (ms)",
+      "targets": [
+        { "expr": "avg_over_time(api_request_duration_seconds_sum[5m]) / avg_over_time(api_request_duration_seconds_count[5m]) * 1000" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Failed Logins",
+      "targets": [
+        { "expr": "increase(failed_logins_total[15m])" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "DB Replication Lag",
+      "targets": [
+        { "expr": "pg_replication_lag_seconds" }
+      ]
+    }
+  ]
+}

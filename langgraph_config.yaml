@@ -1,0 +1,207 @@
+# Konfigurasi LangGraph Multi-Tier untuk 200 Node dalam 50 Level
+# Berdasarkan spesifikasi arsitektur besar
+
+version: "1.0"
+
+# Konfigurasi Global
+global_settings:
+  total_nodes: 200
+  total_tiers: 50
+  nodes_per_tier: 4
+  max_concurrent_executions: 10
+  default_timeout: 30
+  retry_count: 3
+  enable_checkpointing: true
+  checkpoint_store: "redis" # atau "database"
+  checkpoint_url: "redis://localhost:6379/0"
+
+# Definisi Stage (5 blok utama)
+stages:
+  input_processing: # Level 1-10
+    start_level: 1
+    end_level: 10
+    description: "Input → Preprocessing"
+    default_node_types:
+      - ai_core
+      - data
+      - data
+      - ai_core
+    parallel_execution: false
+
+  reasoning: # Level 11-20
+    start_level: 11
+    end_level: 20
+    description: "Reasoning Awal"
+    default_node_types:
+      - ai_core
+      - ai_core
+      - compute
+      - decision
+    parallel_execution: true
+
+  execution: # Level 21-30
+    start_level: 21
+    end_level: 30
+    description: "Decision & Execution"
+    default_node_types:
+      - compute
+      - decision
+      - compute
+      - decision
+    parallel_execution: true
+
+  validation: # Level 31-40
+    start_level: 31
+    end_level: 40
+    description: "Validation & Refinement"
+    default_node_types:
+      - security
+      - decision
+      - data
+      - decision
+    parallel_execution: false
+
+  output_monitoring: # Level 41-50
+    start_level: 41
+    end_level: 50
+    description: "Final Output + Monitor"
+    default_node_types:
+      - control
+      - data
+      - security
+      - control
+    parallel_execution: false
+
+# Definisi Tipe Node dan Konfigurasinya
+node_types:
+  ai_core:
+    count: 50
+    description: "Menjalankan reasoning utama (LLM)"
+    implementation: "langchain_openai.ChatOpenAI"
+    config:
+      model: "gpt-4"
+      temperature: 0.1
+      max_tokens: 1000
+    language: "python"
+    max_concurrent: 1
+
+  data:
+    count: 40
+    description: "Akses & manipulasi database"
+    implementation: "custom_data_handler"
+    config:
+      connection_pool_size: 10
+      timeout: 30
+    language: "go/python"
+    max_concurrent: 5
+
+  compute:
+    count: 40
+    description: "Hitung berat / task paralel"
+    implementation: "custom_compute_handler"
+    config:
+      max_workers: 8
+      memory_limit: "2GB"
+    language: "rust/go"
+    max_concurrent: 10
+
+  queue:
+    count: 20
+    description: "Message broker (async job)"
+    implementation: "custom_queue_handler"
+    config:
+      broker: "rabbitmq"
+      max_queue_size: 1000
+    language: "python"
+    max_concurrent: 20
+
+  decision:
+    count: 30
+    description: "Mengatur alur antar AI"
+    implementation: "custom_decision_handler"
+    config:
+      threshold: 0.5
+      algorithm: "rule_based"
+    language: "python"
+    max_concurrent: 5
+
+  control:
+    count: 10
+    description: "Manajemen status graph"
+    implementation: "custom_control_handler"
+    config:
+      monitoring_interval: 5
+      health_check: true
+    language: "python"
+    max_concurrent: 2
+
+  security:
+    count: 10
+    description: "Validasi, logging, & enkripsi"
+    implementation: "custom_security_handler"
+    config:
+      encryption_algorithm: "aes-256"
+      log_level: "info"
+    language: "rust/go"
+    max_concurrent: 3
+
+# Konfigurasi Tiap Level Secara Spesifik
+tiers:
+  # Template untuk setiap tier, akan di-generate secara otomatis
+  tier_template:
+    parallel_execution: false
+    threshold: 0.5
+    timeout: 30
+    checkpoint_interval: 5 # buat checkpoint setiap 5 node di tier ini
+
+# Alur Eksekusi
+execution_flow:
+  # Definisi bagaimana node-node terhubung antar tier
+  inter_tier_connections:
+    type: "fully_connected" # atau "selective", "hierarchical"
+    connection_policy: "all_to_all_next_tier"
+  
+  intra_tier_connections:
+    type: "linear" # atau "mesh", "star"
+    enable_feedback: true
+
+# Optimasi
+optimization:
+  dynamic_node_loading: true
+  node_caching: true
+  partial_execution: true
+  sharded_memory: true
+  memory_shards:
+    - "redis://localhost:6379/1"
+    - "redis://localhost:6379/2"
+    - "redis://localhost:6379/3"
+
+# Monitoring dan Logging
+monitoring:
+  enable_node_health_check: true
+  response_time_threshold: 5000 # ms
+  memory_usage_threshold: 80 # persen
+  queue_backlog_threshold: 100
+  metrics_exporter: "prometheus"
+  log_level: "info"
+  log_format: "json"
+
+# Keamanan
+security:
+  enable_node_authentication: true
+  encryption_at_rest: true
+  audit_logging: true
+  api_rate_limiting: 100 # permintaan per menit
+
+# Deployment
+deployment:
+  containerized: true
+  replicas: 3
+  resource_limits:
+    cpu: "2000m"
+    memory: "4Gi"
+  autoscaling:
+    enabled: true
+    min_replicas: 1
+    max_replicas: 10
+    target_cpu_utilization: 70
